@@ -56,6 +56,23 @@ export default createStore<State>({
           : product
       );
     },
+
+    removeFromCart(state, { productId }) {
+      if (!state.Cart[productId]) return;
+
+      const quantity = state.Cart[productId];
+
+      const newCart = { ...state.Cart };
+      delete newCart[productId];
+
+      state.Cart = newCart;
+
+      state.Products = state.Products.map((product) =>
+        product.ItemID === productId
+          ? { ...product, OnHandQuantity: product.OnHandQuantity + quantity }
+          : product
+      );
+    },
   },
 
   actions: {
@@ -91,6 +108,25 @@ export default createStore<State>({
       context.commit("addToCart", {
         productId,
         quantity,
+      });
+    },
+
+    removeFromCart(context: ActionContext<State, State>, { productId }) {
+      const cartItem = context.state.Products.find(
+        (product) => product.ItemID === productId
+      );
+      const quantity = context.state.Cart[productId];
+
+      if (!cartItem || !quantity) return;
+
+      const confirmed = confirm(
+        `Are you sure your want to remove ${quantity} units of '${cartItem.ItemName}' from cart?`
+      );
+
+      if (!confirmed) return;
+
+      context.commit("removeFromCart", {
+        productId,
       });
     },
   },

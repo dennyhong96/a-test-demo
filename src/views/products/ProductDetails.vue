@@ -3,7 +3,9 @@
     <container>
       <div v-if="product" class="wrapper">
         <div class="left">
-          <Image :src="product.PhotoName" :alt="product.ItemName" />
+          <div>
+            <Image :src="product.PhotoName" :alt="product.ItemName" />
+          </div>
         </div>
 
         <div class="right">
@@ -23,42 +25,7 @@
             {{ product.OnHandQuantity }}
           </p>
 
-          <form @submit="handleSubmit">
-            <div class="form-row">
-              <button
-                @click="handleReduceQty"
-                type="button"
-                :disabled="product.OnHandQuantity <= 0"
-                aria-label="Decrease quantity"
-              >
-                -
-              </button>
-              <input
-                type="number"
-                step="1"
-                min="1"
-                :max="product.OnHandQuantity"
-                v-model="num"
-                :disabled="product.OnHandQuantity <= 0"
-              />
-              <button
-                @click="handleIncreaseQty"
-                type="button"
-                :disabled="product.OnHandQuantity <= 0"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
-
-            <button
-              class="add-to-cart"
-              :disabled="product.OnHandQuantity <= 0 || num < 1"
-              type="submit"
-            >
-              Add to cart
-            </button>
-          </form>
+          <ProductForm :product="product" />
         </div>
       </div>
     </container>
@@ -66,18 +33,20 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
-
+import { computed, defineComponent } from "vue";
 import { useRoute } from "vue-router";
+
 import useStore from "@/composables/useStore";
-import Container from "@/components/Container.vue";
-import Image from "@/components/Image.vue";
+import Container from "@/components/common/Container.vue";
+import Image from "@/components/common/Image.vue";
+import ProductForm from "@/components/products/ProductForm.vue";
 import { formatCurrency } from "@/utils";
 
 export default defineComponent({
   name: "ProductDetails",
 
   components: {
+    ProductForm,
     Container,
     Image,
   },
@@ -101,41 +70,8 @@ export default defineComponent({
       };
     });
 
-    const num = ref<number>(1);
-
-    const handleReduceQty = () => {
-      if (num.value === 1) return;
-      num.value--;
-    };
-
-    const handleIncreaseQty = () => {
-      if (num.value === product.value?.OnHandQuantity) return;
-      num.value++;
-    };
-
-    const handleSubmit = (evt: Event) => {
-      evt.preventDefault();
-      if (!product.value) return;
-      if (num.value < 1) return;
-      if (num.value > product.value.OnHandQuantity) return;
-      //
-      store.dispatch("addToCart", {
-        productId: product.value.ItemID,
-        quantity: num.value,
-      });
-      console.log({
-        productId: product.value.ItemID,
-        quantity: num.value,
-      });
-    };
-
     return {
       product,
-      num,
-
-      handleReduceQty,
-      handleIncreaseQty,
-      handleSubmit,
     };
   },
 });
@@ -150,25 +86,13 @@ section {
 .wrapper {
   width: 100%;
   display: grid;
-  grid-template-columns: 55% 45%;
+  grid-template-columns: 1.25fr 1fr;
   gap: 48px;
 }
 
-@media (max-width: 950px) {
-  .wrapper {
-    grid-template-columns: 50% 50%;
-  }
-}
-
-@media (max-width: 600px) {
-  .wrapper {
-    grid-template-columns: 1fr;
-  }
-}
-
-.left {
-  padding: 16px;
+.left > div {
   border: 1px solid var(--color-gray-700);
+  padding: 16px;
 }
 
 h1 {
@@ -191,50 +115,15 @@ p span {
   font-size: 0.9rem;
 }
 
-form button:disabled,
-form input:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+@media (max-width: 950px) {
+  .wrapper {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.form-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.form-row button,
-.form-row input {
-  width: 36px;
-  height: 36px;
-  font: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 36px;
-  text-align: center;
-  -moz-appearance: textfield;
-}
-
-.form-row input {
-  border: 1px solid var(--color-gray-700);
-}
-
-.form-row button {
-  background: var(--color-gray-100);
-}
-
-.form-row input::-webkit-outer-spin-button,
-.form-row input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.add-to-cart {
-  background: var(--color-gray-900);
-  color: var(--color-white);
-  padding: 8px 16px;
-  text-transform: uppercase;
-  font-weight: var(--font-weight-bold);
+@media (max-width: 600px) {
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

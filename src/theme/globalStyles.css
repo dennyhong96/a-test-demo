@@ -14,7 +14,7 @@
   --color-gray-300: hsl(35deg 8% 80%);
   --color-gray-500: hsl(30deg 4% 60%);
   --color-gray-700: hsl(28deg 5% 40%);
-  --color-gray-900: hsl(24deg 6% 16%);
+  --color-gray-900: hsl(24deg 6% 10%);
   --color-primary: hsl(224deg 30% 40%);
   --color-secondary: hsl(180deg 34% 37%);
   --color-urgent: hsl(0deg 55% 54%);
@@ -41,6 +41,8 @@ body {
   font-weight: 400;
   line-height: 1.5;
   overflow-x: hidden;
+  background-color: var(--color-white);
+  color: var(--color-gray-900);
 }
 
 html,

@@ -15,7 +15,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 
-import Container from "@/components/Container.vue";
+import Container from "@/components/common/Container.vue";
 import useStore from "@/composables/useStore";
 import ProductCard from "@/components/products/ProductCard.vue";
 import { formatCurrency } from "@/utils";

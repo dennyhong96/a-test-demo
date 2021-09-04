@@ -1,7 +1,9 @@
 <template>
-  <div class="wrapper" v-click-outside="onClickOutsite">
+  <div class="wrapper" v-click-outside="handleClickOutside">
+    <!-- Cart Toggle Button -->
     <button
-      @click="toggleCart"
+      class="cart-toggler"
+      @click="handleToggleCart"
       :aria-label="isCartOpen ? 'Close cart' : 'Open cart'"
     >
       <svg
@@ -24,35 +26,64 @@
       </span>
     </button>
 
+    <!-- Cart Dropdown -->
     <div v-if="isCartOpen" class="cart">
       <ul>
         <li v-for="cartItem in cartItems" :key="cartItem.ItemID">
-          <span>{{ cartItem.ItemName }}</span> x {{ cartItem.cartQuantity }} -
-          {{ cartItem.itemTotal }}
+          <div>
+            {{ cartItem.cartQuantity }} x <span>{{ cartItem.ItemName }}</span>
+          </div>
+          <div>
+            - {{ cartItem.lineTotal }}
+            <button
+              :aria-label="`Remove cart item - ${cartItem.ItemName}`"
+              @click="handleRemoveCartItem(cartItem.ItemID)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                />
+              </svg>
+            </button>
+          </div>
         </li>
       </ul>
-
       <div class="total"><span>Total:</span> {{ total }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { computed, defineComponent, ref } from "vue";
+
 import useStore from "@/composables/useStore";
 import { formatCurrency } from "@/utils";
-import { computed, defineComponent, ref } from "vue";
 
 export default defineComponent({
   setup() {
     const store = useStore();
     const isCartOpen = ref(false);
 
-    const toggleCart = () => {
+    const handleToggleCart = () => {
       isCartOpen.value = !isCartOpen.value;
     };
 
-    const onClickOutsite = () => {
+    const handleClickOutside = () => {
       isCartOpen.value = false;
+    };
+
+    const handleRemoveCartItem = (productId: string | undefined) => {
+      if (!productId) return;
+      store.dispatch("removeFromCart", { productId });
     };
 
     const cartItems = computed(() => {
@@ -60,25 +91,26 @@ export default defineComponent({
         const cartItem = store.state.Products.find(
           (product) => product.ItemID === productId
         );
-
         return {
           ...cartItem,
           cartQuantity: quantity,
-          itemTotal: formatCurrency(cartItem?.BasePrice ?? 0 * quantity),
+          lineTotal: formatCurrency(cartItem?.BasePrice ?? 0 * quantity),
         };
       });
     });
 
     const total = computed(() => {
-      const total = cartItems.value.reduce((total, currentItem) => {
-        return total + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity;
+      const sum = cartItems.value.reduce((accumulator, currentItem) => {
+        return (
+          accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity
+        );
       }, 0);
-      return formatCurrency(total);
+      return formatCurrency(sum);
     });
 
     const totalItems = computed(() => {
-      return cartItems.value.reduce((totalItems, currentCartItem) => {
-        return totalItems + currentCartItem.cartQuantity;
+      return cartItems.value.reduce((accumulator, currentCartItem) => {
+        return accumulator + currentCartItem.cartQuantity;
       }, 0);
     });
 
@@ -88,8 +120,9 @@ export default defineComponent({
       total,
       totalItems,
 
-      toggleCart,
-      onClickOutsite,
+      handleToggleCart,
+      handleClickOutside,
+      handleRemoveCartItem,
     };
   },
 });
@@ -101,14 +134,14 @@ export default defineComponent({
   height: max-content;
 }
 
-button {
+.cart-toggler {
   display: block;
   width: 36px;
   height: 36px;
   position: relative;
 }
 
-button span {
+.cart-toggler span {
   height: 20px;
   width: 20px;
   position: absolute;
@@ -129,10 +162,10 @@ button span {
 }
 
 .cart {
-  min-width: 200px;
+  min-width: min(calc(100vh - 64px), 200px);
   position: absolute;
   right: 0;
-  top: 100%;
+  top: calc(100% + 8px);
   background: var(--color-white);
   border: 1px solid var(--color-gray-700);
   padding: 16px;
@@ -142,11 +175,18 @@ button span {
 
 .cart li {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cart li div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .cart li:not(:last-of-type) {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .cart li span {
@@ -155,7 +195,25 @@ button span {
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 150px;
-  margin-right: 4px;
+  margin-left: 4px;
+}
+
+@media (max-width: 600px) {
+  .cart li span {
+    max-width: 75px;
+  }
+}
+
+.cart li button {
+  width: 28px;
+  height: 28px;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-gray-100);
+  margin-left: 4px;
+  padding: 4px;
 }
 
 .cart .total {

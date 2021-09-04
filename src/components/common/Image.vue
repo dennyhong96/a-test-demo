@@ -6,8 +6,9 @@
 </template>
 
 <script lang="ts">
-import { optimizeProductImageSrc } from "@/utils";
 import { defineComponent, PropType } from "vue";
+
+import { optimizeProductImageSrc } from "@/utils";
 
 export default defineComponent({
   name: "Image",

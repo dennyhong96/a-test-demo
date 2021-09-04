@@ -7,7 +7,7 @@
       <div>
         <h3>{{ product.ItemName }}</h3>
         <h4>{{ product.BasePrice }}</h4>
-        <p>{{ product.Description }}</p>
+        <p v-if="product.Description">{{ product.Description }}</p>
       </div>
     </router-link>
   </li>
@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-import Image from "@/components/Image.vue";
+import Image from "@/components/common/Image.vue";
 import { Product } from "@/types/Product";
 
 export default defineComponent({

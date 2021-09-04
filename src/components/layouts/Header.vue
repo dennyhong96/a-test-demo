@@ -18,7 +18,7 @@ import { computed, defineComponent } from "vue";
 
 import useStore from "@/composables/useStore";
 import CartDropdown from "@/components/cart/CartDropdown.vue";
-import Container from "@/components/Container.vue";
+import Container from "@/components/common/Container.vue";
 
 export default defineComponent({
   name: "Header",
@@ -60,8 +60,21 @@ header {
 header a {
   display: flex;
   align-items: center;
-  padding-left: 32px;
-  padding-right: 32px;
+}
+
+header a img {
+  width: 100px;
+  height: auto;
+}
+
+@media (max-width: 600px) {
+  header a img {
+    width: 75px;
+  }
+
+  header a h4 {
+    display: none;
+  }
 }
 
 header h4 {
