@@ -5,6 +5,7 @@ import { Company } from "@/types/Company";
 import { Product } from "@/types/Product";
 import { SalesRep } from "@/types/SalesRep";
 import { REQUEST_URL } from "@/constants";
+import { generateLogoSrc } from "@/utils";
 
 export interface State {
   Products: Product[];
@@ -46,6 +47,7 @@ export default createStore<State>({
           CompanyName: data.CompanyName,
           ManufacturerID: data.ManufacturerID,
           Message: data.Message,
+          logoSrc: generateLogoSrc(data.ManufacturerID),
         },
       });
     },
