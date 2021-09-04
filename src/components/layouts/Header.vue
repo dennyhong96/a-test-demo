@@ -1,9 +1,14 @@
 <template>
   <header>
-    <router-link :to="{ name: 'Home' }">
-      <img v-if="company" :src="company?.logoSrc" alt="Back to home page" />
-      <h4>{{ company?.CompanyName }}</h4>
-    </router-link>
+    <Container>
+      <div class="inner">
+        <router-link :to="{ name: 'Home' }">
+          <img v-if="company" :src="company?.logoSrc" alt="Back to home page" />
+          <h4>{{ company?.CompanyName }}</h4>
+        </router-link>
+        <CartDropdown />
+      </div>
+    </Container>
   </header>
   <div></div>
 </template>
@@ -12,9 +17,16 @@
 import { computed, defineComponent } from "vue";
 
 import useStore from "@/composables/useStore";
+import CartDropdown from "@/components/cart/CartDropdown.vue";
+import Container from "@/components/Container.vue";
 
 export default defineComponent({
   name: "Header",
+
+  components: {
+    CartDropdown,
+    Container,
+  },
 
   setup() {
     const store = useStore();
@@ -36,10 +48,13 @@ header {
   right: 0;
   height: var(--height-header);
   border-bottom: 1px solid var(--color-gray-300);
+  background: var(--color-white);
+}
+
+.inner {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--color-white);
+  justify-content: space-between;
 }
 
 header a {

@@ -101,7 +101,7 @@ export default defineComponent({
       };
     });
 
-    const num = ref(1);
+    const num = ref<number>(1);
 
     const handleReduceQty = () => {
       if (num.value === 1) return;
@@ -119,6 +119,14 @@ export default defineComponent({
       if (num.value < 1) return;
       if (num.value > product.value.OnHandQuantity) return;
       //
+      store.dispatch("addToCart", {
+        productId: product.value.ItemID,
+        quantity: num.value,
+      });
+      console.log({
+        productId: product.value.ItemID,
+        quantity: num.value,
+      });
     };
 
     return {
