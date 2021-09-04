@@ -6,6 +6,7 @@
   </main>
 
   <Footer />
+  <SalesRepWidget />
 </template>
 
 <script lang="ts">
@@ -13,6 +14,7 @@ import { defineComponent } from "vue";
 
 import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
+import SalesRepWidget from "@/components/supports/SalesRepWidget.vue";
 import useStore from "@/composables/useStore";
 
 export default defineComponent({
@@ -21,6 +23,7 @@ export default defineComponent({
   components: {
     Header,
     Footer,
+    SalesRepWidget,
   },
 
   setup() {
