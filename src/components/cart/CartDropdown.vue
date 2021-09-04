@@ -141,6 +141,11 @@ export default defineComponent({
   position: relative;
 }
 
+.cart-toggler svg {
+  width: 100%;
+  height: 100%;
+}
+
 .cart-toggler span {
   height: 20px;
   width: 20px;
@@ -167,10 +172,14 @@ export default defineComponent({
   right: 0;
   top: calc(100% + 8px);
   background: var(--color-white);
-  border: 1px solid var(--color-gray-700);
+
   padding: 16px;
   font-size: 0.9rem;
   white-space: nowrap;
+
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
 }
 
 .cart li {
@@ -214,6 +223,21 @@ export default defineComponent({
   background: var(--color-gray-100);
   margin-left: 4px;
   padding: 4px;
+  border-radius: 4px;
+
+  transition: 0.3s ease-out;
+  will-change: transform;
+}
+
+.cart li button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.cart li button:hover,
+.cart li button:focus,
+.cart li button:active {
+  background: var(--color-gray-300);
 }
 
 .cart .total {

@@ -9,6 +9,7 @@
       >
         -
       </button>
+
       <input
         type="number"
         step="1"
@@ -17,6 +18,7 @@
         v-model="num"
         :disabled="product.OnHandQuantity <= 0"
       />
+
       <button
         @click="handleIncreaseQty"
         type="button"
@@ -118,12 +120,32 @@ form input:disabled {
   -moz-appearance: textfield;
 }
 
-.form-row input {
-  border: 1px solid var(--color-gray-700);
+.form-row button {
+  display: block;
+  background: var(--color-gray-100);
+
+  transition: 0.3s ease-out;
+  will-change: transform;
 }
 
-.form-row button {
-  background: var(--color-gray-100);
+.form-row button:hover,
+.form-row button:focus,
+.form-row button:active {
+  background: var(--color-gray-300);
+}
+
+.form-row button:first-of-type {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.form-row button:last-of-type {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.form-row input {
+  border: 1px solid var(--color-gray-700);
 }
 
 .form-row input::-webkit-outer-spin-button,
@@ -133,10 +155,23 @@ form input:disabled {
 }
 
 .add-to-cart {
+  border-radius: 5px;
   background: var(--color-gray-900);
   color: var(--color-white);
   padding: 8px 16px;
   text-transform: uppercase;
   font-weight: var(--font-weight-bold);
+
+  transition: 0.3s ease-out;
+  will-change: transform;
+}
+
+.add-to-cart:hover,
+.add-to-cart:focus,
+.add-to-cart:active {
+  -webkit-box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 </style>

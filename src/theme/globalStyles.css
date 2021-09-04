@@ -27,6 +27,8 @@
   /* --font-family-serif: ${FAMILIES.serif};
   --font-family-sans-serif: ${FAMILIES.sansSerif};
   --font-family-logo: ${FAMILIES.logo}; */
+
+  --z-header: 1;
 }
 
 *,

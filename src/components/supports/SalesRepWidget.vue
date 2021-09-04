@@ -1,26 +1,38 @@
 <template>
   <div class="wrapper" v-click-outside="handleClickOutside">
+    <!-- Sales Rep Info  -->
     <div v-if="isWidgetOpen" class="sales-info">
-      <p>Hi, this is {{ salesRep.FirstName }} {{ salesRep.LastName }} 👋</p>
-      <p>
-        If you have sany inquiries, please don't hesitate to call me at
-        <a
-          target="_blank"
-          rel="noreferrer noopener"
-          :href="`tel:${salesRep.CellPhone}`"
-          >{{ salesRep.CellPhone }}</a
-        >
-        , or emil me at {{ salesRep.EmailAddress }}
-        <a
-          target="_blank"
-          rel="noreferrer noopener"
-          :href="`mailto:${salesRep.EmailAddress}`"
-          >{{ salesRep.EmailAddress }}</a
-        >
-      </p>
+      <div class="header">
+        <p>
+          Hi, this is {{ salesRep.FirstName }} {{ salesRep.LastName }}
+          <span aria-label="Waving hand">👋</span>
+        </p>
+      </div>
+      <div class="body">
+        <p>
+          If you have any inquiries, please don't hesitate to call me at
+          <a
+            target="_blank"
+            rel="noreferrer noopener"
+            :href="`tel:${salesRep.CellPhone}`"
+            >{{ salesRep.CellPhone }}</a
+          >
+          , or emil me at
+          <a
+            target="_blank"
+            rel="noreferrer noopener"
+            :href="`mailto:${salesRep.EmailAddress}`"
+            >{{ salesRep.EmailAddress }}</a
+          >
+        </p>
+      </div>
     </div>
 
-    <button @click="handleToggleWidget">
+    <!-- Widget Toggler Button -->
+    <button
+      @click="handleToggleWidget"
+      :aria-label="`${isWidgetOpen ? 'Close' : 'Open'} support widget`"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -86,8 +98,21 @@ export default defineComponent({
   height: 56px;
   background: var(--color-white);
   border-radius: 99999px;
+
   -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
   box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper button svg {
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 600px) {
+  .wrapper button {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .sales-info {
@@ -97,8 +122,31 @@ export default defineComponent({
   transform: translateY(calc(-100% - 8px));
   background: var(--color-white);
   width: min(calc(100vw - 64px), 250px);
-  border: 1px solid var(--color-gray-900);
+  border-radius: 15px;
+  overflow: hidden;
+
+  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.1);
+}
+
+.sales-info .header {
   padding: 16px;
+  background: var(--color-gray-900);
+  color: var(--color-white);
+}
+
+.sales-info .body {
+  padding: 16px;
+}
+
+.sales-info a {
+  text-decoration: underline;
+  transition: 0.2s ease-out;
+}
+
+.sales-info a:hover {
+  background: var(--color-gray-900);
+  color: var(--color-white);
 }
 
 p:not(:last-of-type) {

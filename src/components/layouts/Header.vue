@@ -47,8 +47,11 @@ header {
   left: 0;
   right: 0;
   height: var(--height-header);
-  border-bottom: 1px solid var(--color-gray-300);
   background: var(--color-white);
+  z-index: var(--z-header);
+
+  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
 }
 
 .inner {

@@ -9,23 +9,25 @@
         </div>
 
         <div class="right">
-          <h1>{{ product.ItemName }}</h1>
-          <h4>{{ product.BasePrice }}</h4>
-          <p>
-            <span>Item ID:</span> {{ product.ItemID }} |
-            <span>Product ID:</span>
-            {{ product.ProductID }}
-          </p>
-          <p v-if="product.Description">
-            <span>Description:</span> {{ product.Description }}
-          </p>
-          <p><span>Dimensions:</span> {{ product.Dimensions }}</p>
-          <p>
-            <span>Units Available:</span>
-            {{ product.OnHandQuantity }}
-          </p>
+          <div class="right-inner">
+            <h1>{{ product.ItemName }}</h1>
+            <h4>{{ product.BasePrice }}</h4>
+            <p>
+              <span>Item ID:</span> {{ product.ItemID }} |
+              <span>Product ID:</span>
+              {{ product.ProductID }}
+            </p>
+            <p v-if="product.Description">
+              <span>Description:</span> {{ product.Description }}
+            </p>
+            <p><span>Dimensions:</span> {{ product.Dimensions }}</p>
+            <p>
+              <span>Units Available:</span>
+              {{ product.OnHandQuantity }}
+            </p>
 
-          <ProductForm :product="product" />
+            <ProductForm :product="product" />
+          </div>
         </div>
       </div>
     </container>
@@ -90,9 +92,11 @@ section {
   gap: 48px;
 }
 
-.left > div {
-  border: 1px solid var(--color-gray-700);
-  padding: 16px;
+.right .right-inner {
+  padding: 32px;
+  border-radius: 15px;
+  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
 }
 
 h1 {
