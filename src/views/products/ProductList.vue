@@ -1,5 +1,5 @@
 <template>
-  <section class="wrapper">
+  <section>
     <Container>
       <ul v-if="products.length">
         <ProductCard
@@ -48,6 +48,7 @@ export default defineComponent({
 <style scoped>
 section {
   padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
 ul {

@@ -1,10 +1,11 @@
-@font-face {
+/* @font-face {
   font-family: "Raleway";
   src: url("/fonts/raleway-variable-font.woff2")
-    format("woff2 supports variations");
+      format("woff2 supports variations"),
+    url("/fonts/raleway-variable-font.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-display: fallback;
-}
+} */
 
 :root {
   --color-white: hsl(0deg 0% 100%);
