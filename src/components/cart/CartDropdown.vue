@@ -107,11 +107,11 @@ export default defineComponent({
       return formatCurrency(sum);
     });
 
-    const totalItems = computed(() => {
-      return cartItems.value.reduce((accumulator, currentCartItem) => {
-        return accumulator + currentCartItem.cartQuantity;
-      }, 0);
-    });
+    // const totalItems = computed(() => {
+    //   return cartItems.value.reduce((accumulator, currentCartItem) => {
+    //     return accumulator + currentCartItem.cartQuantity;
+    //   }, 0);
+    // });
 
     return {
       isCartOpen,
