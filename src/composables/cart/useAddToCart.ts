@@ -3,8 +3,7 @@ import { computed, ref } from "vue";
 import useStore from "@/composables/common/useStore";
 import { Product } from "@/types/Product";
 import { pluralize } from "@/utils";
-
-const NOTIFICATION_TIMEOUT = 3000;
+import { NOTIFICATION_DURATION } from "@/constants";
 
 function useAddToCart(product: Product | undefined) {
   const store = useStore();
@@ -43,7 +42,7 @@ function useAddToCart(product: Product | undefined) {
     numAddedToCart.value = addToCartQuantity.value;
     timeout = setTimeout(() => {
       numAddedToCart.value = 0;
-    }, NOTIFICATION_TIMEOUT);
+    }, NOTIFICATION_DURATION);
 
     addToCartQuantity.value = 1;
   };

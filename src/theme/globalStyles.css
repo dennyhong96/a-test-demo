@@ -15,8 +15,6 @@
   --color-gray-500: hsl(30deg 4% 60%);
   --color-gray-700: hsl(28deg 5% 40%);
   --color-gray-900: hsl(24deg 6% 10%);
-  --color-primary: hsl(224deg 30% 40%);
-  --color-secondary: hsl(180deg 34% 37%);
   --color-urgent: hsl(0deg 55% 54%);
   --color-success: hsl(144deg, 90%, 30%);
 
@@ -25,9 +23,6 @@
   --font-weight-bold: 700;
 
   --height-header: 100px;
-  /* --font-family-serif: ${FAMILIES.serif};
-  --font-family-sans-serif: ${FAMILIES.sansSerif};
-  --font-family-logo: ${FAMILIES.logo}; */
 
   --z-header: 1;
   --z-skip-link: 2;
@@ -52,15 +47,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-body {
-  font-family: "Raleway", Arial, Helvetica, sans-serif;
-  font-weight: 400;
-  line-height: 1.5;
-  overflow-x: hidden;
-  background-color: var(--color-white);
-  color: var(--color-gray-900);
-}
-
 html,
 body,
 #app {
@@ -69,6 +55,15 @@ body,
 
 #app {
   isolation: isolate;
+}
+
+body {
+  font-family: "Raleway", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-x: hidden;
+  background-color: var(--color-white);
+  color: var(--color-gray-900);
 }
 
 button {
@@ -91,9 +86,4 @@ a {
 img {
   display: block;
   max-width: 100%;
-}
-
-@media (max-width: 1300px) {
-}
-@media (max-width: 950px) {
 }

@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/products/:itemId",
     name: "ProductDetails",
 
-    // Code split
+    // Code split by route
     component: () =>
       import(/* webpackChunkName: "productDetails" */ "@/views/products/ProductDetails.vue"),
     props: true, // Accept any route parameters as props

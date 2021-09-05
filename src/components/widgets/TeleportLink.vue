@@ -12,8 +12,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-const FOCUSABLE_SELECTORS =
-  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+import { FOCUSABLE_ELEMENT_SELECTORS } from "@/constants";
 
 export default defineComponent({
   name: "SkipLink",
@@ -32,7 +31,7 @@ export default defineComponent({
       const main = document.getElementById("main");
       if (!main) return;
       const focusableElementsInMain = [
-        ...main.querySelectorAll(FOCUSABLE_SELECTORS),
+        ...main.querySelectorAll(FOCUSABLE_ELEMENT_SELECTORS),
       ] as HTMLElement[];
       return focusableElementsInMain[0]?.focus();
     };
