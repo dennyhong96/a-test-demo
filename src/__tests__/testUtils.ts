@@ -1,15 +1,24 @@
 import "isomorphic-fetch";
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/vue";
-import { createStore } from "vuex";
+import { render, RenderOptions } from "@testing-library/vue";
+import { createStore, StoreOptions } from "vuex";
 import { createRouter, createWebHistory } from "vue-router";
 
-import { storeOptions, key } from "@/store";
+import { storeOptions, key, State } from "@/store";
 import { routes } from "@/router";
 import clickOutside from "@/lib/clickOutside";
 
-const customRender = (ui: any) => {
-  const store = createStore(storeOptions);
+const customRender = (
+  ui: any,
+  {
+    storeOptionsOverrite,
+    renderOptions,
+  }: {
+    storeOptionsOverrite?: StoreOptions<Partial<State>>;
+    renderOptions?: Partial<RenderOptions>;
+  } = {},
+) => {
+  const store = createStore({ ...storeOptions, ...storeOptionsOverrite } as StoreOptions<State>);
   const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
@@ -25,6 +34,7 @@ const customRender = (ui: any) => {
         "click-outside": clickOutside,
       },
     },
+    ...renderOptions,
   });
 };
 

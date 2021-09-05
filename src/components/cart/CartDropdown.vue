@@ -30,7 +30,11 @@
     <transition name="drop">
       <div v-if="isCartOpen" class="cart">
         <ul v-if="cartItemsCount">
-          <li v-for="cartItem in cartItems" :key="cartItem.ItemID">
+          <li
+            v-for="cartItem in cartItems"
+            :key="cartItem.ItemID"
+            :data-testId="`cart-line-item-${cartItem.ItemID}`"
+          >
             <div>
               {{ cartItem.cartQuantity }} x <span>{{ cartItem.ItemName }}</span>
             </div>
@@ -59,7 +63,7 @@
           </li>
         </ul>
         <div v-else>Happy shopping! <span aria-label="Shopping cart icon">🛒</span></div>
-        <div class="total"><span>Total:</span> {{ total }}</div>
+        <div class="total" data-testid="cart-total"><span>Total:</span> {{ total }}</div>
       </div>
     </transition>
   </div>
@@ -71,6 +75,8 @@ import { defineComponent } from "vue";
 import useCart from "@/composables/cart/useCart";
 
 export default defineComponent({
+  name: "CartDropdown",
+
   setup() {
     return useCart();
   },

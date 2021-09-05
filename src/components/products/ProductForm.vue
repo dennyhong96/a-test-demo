@@ -16,9 +16,10 @@
         type="number"
         step="1"
         min="1"
-        :max="product.OnHandQuantity"
         v-model="addToCartQuantity"
+        :max="product.OnHandQuantity"
         :disabled="product.OnHandQuantity <= 0"
+        data-testId="product-form-quantity-input"
       />
 
       <!-- +1 button -->

@@ -119,7 +119,7 @@ export const storeOptions: StoreOptions<State> = {
 
       if (!cartItem || !quantity) return;
 
-      const confirmed = confirm(
+      const confirmed = window.confirm(
         `Are you sure your want to remove ${quantity} units of '${cartItem.ItemName}' from cart?`,
       );
       if (!confirmed) return;

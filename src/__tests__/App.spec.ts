@@ -1,5 +1,5 @@
-import { render, fireEvent, screen } from "./testUtils";
-import { server } from "./mocks/server";
+import { render, fireEvent, screen } from "@/__tests__/testUtils";
+import { server } from "@/__tests__/mocks/server";
 import App from "@/App.vue";
 
 describe("App component", () => {
