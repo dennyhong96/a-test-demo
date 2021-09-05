@@ -277,7 +277,7 @@ export default defineComponent({
 
 @media (prefers-reduced-motion: no-preference) {
   .cart-toggler {
-    transition: 0.3s ease-out;
+    transition: var(--transition-standard);
     will-change: transform;
   }
 
@@ -296,7 +296,7 @@ export default defineComponent({
   }
 
   .cart li button {
-    transition: 0.3s ease-out;
+    transition: var(--transition-standard);
     will-change: transform;
   }
 }

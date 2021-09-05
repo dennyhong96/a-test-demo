@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, onUnmounted } from "vue";
 import { useRoute } from "vue-router";
 
 import useStore from "@/composables/useStore";
@@ -30,6 +30,7 @@ import Container from "@/components/common/Container.vue";
 import Image from "@/components/common/Image.vue";
 import ProductForm from "@/components/products/ProductForm.vue";
 import ProductInfo from "@/components/products/ProductInfo.vue";
+import { Product } from "@/types/Product";
 
 export default defineComponent({
   name: "ProductDetails",
@@ -45,8 +46,30 @@ export default defineComponent({
     const store = useStore();
     const route = useRoute();
 
-    const product = computed(() => {
+    const isLoading = computed(() => store.state.isLoading);
+    const product = computed<Product>(() => {
       return store.getters.getProductByItemId(route.params.itemId);
+    });
+    const companyName = computed(() => store.state.Company?.CompanyName);
+
+    // Setup document title and meta description
+    const metaDescription = document.querySelector(
+      'meta[name="description"]'
+    ) as HTMLMetaElement;
+
+    const oldTitle = document.title;
+    const oldMetaDescription = metaDescription.content;
+
+    document.title = isLoading.value
+      ? oldTitle
+      : `${product.value?.ItemName} | ${companyName.value}`;
+    metaDescription.content = isLoading.value
+      ? oldMetaDescription
+      : `${product.value?.Description ?? oldMetaDescription}`;
+
+    onUnmounted(() => {
+      document.title = oldTitle;
+      metaDescription.content = oldMetaDescription;
     });
 
     return { product };

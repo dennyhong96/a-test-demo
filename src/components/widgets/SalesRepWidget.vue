@@ -172,7 +172,7 @@ p:not(:last-of-type) {
 
 @media (prefers-reduced-motion: no-preference) {
   .wrapper button {
-    transition: 0.3s ease-out;
+    transition: var(--transition-standard);
     will-change: transform;
   }
 
@@ -191,7 +191,7 @@ p:not(:last-of-type) {
   }
 
   .sales-info a {
-    transition: 0.2s ease-out;
+    transition: var(--transition-standard);
   }
 }
 </style>

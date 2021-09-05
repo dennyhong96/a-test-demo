@@ -35,6 +35,8 @@
   --shadow-raised: 0px 0px 20px 6px rgba(0, 0, 0, 0.05);
   --shadow-button: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
     5px 5px 15px 5px rgba(0, 0, 0, 0);
+
+  --transition-standard: 0.3s ease-out;
 }
 
 @media (max-width: 600px) {

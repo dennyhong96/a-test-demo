@@ -222,12 +222,12 @@ form input:disabled {
 
 @media (prefers-reduced-motion: no-preference) {
   .form-row button {
-    transition: 0.3s ease-out;
+    transition: var(--transition-standard);
     will-change: transform;
   }
 
   .add-to-cart {
-    transition: 0.3s ease-out;
+    transition: var(--transition-standard);
     will-change: transform;
   }
 

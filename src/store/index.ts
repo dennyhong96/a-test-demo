@@ -13,6 +13,7 @@ export interface State {
   SalesRep: SalesRep | null;
   Company: Company | null;
   Cart: Cart;
+  isLoading: boolean;
 }
 
 interface ResponseData extends Company {
@@ -28,6 +29,7 @@ export default createStore<State>({
     Company: null,
     SalesRep: null,
     Cart: {},
+    isLoading: true,
   },
 
   mutations: {
@@ -35,6 +37,7 @@ export default createStore<State>({
       state.Products = payload.Products;
       state.SalesRep = payload.SalesRep;
       state.Company = payload.Company;
+      state.isLoading = false;
     },
 
     addToCart(state, { productId, quantity }) {

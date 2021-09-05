@@ -5,16 +5,16 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
-export function generateLogoSrc(manufacturerId: string, width = 100): string {
+export function generateLogoSrc(manufacturerId: string, width = 200): string {
   return `http://images.repzio.com/productimages/${manufacturerId}/logo${manufacturerId}_lg.jpg?width=${width}`;
 }
 
 export function optimizeProductImageSrc(
   src: string,
   {
-    smImageSize = 200,
-    mdImageSize = 400,
-    lgImageSize = 600,
+    smImageSize = 400,
+    mdImageSize = 600,
+    lgImageSize = 800,
   }: {
     smImageSize?: number;
     mdImageSize?: number;
