@@ -1,24 +1,27 @@
 <template>
-  <section>
-    <container>
-      <div v-if="product" class="wrapper">
-        <div class="left">
-          <Image
-            :src="product.PhotoName"
-            :alt="product.ItemName"
-            :aspectRatio="1 / 1"
-          />
-        </div>
+  <Section>
+    <Container>
+      <ComponentFade>
+        <div v-if="!isLoading && product" class="wrapper">
+          <div class="left">
+            <Image
+              :src="product.PhotoName"
+              :alt="product.ItemName"
+              :aspectRatio="1 / 1"
+            />
+          </div>
 
-        <div class="right">
-          <div class="right-inner">
-            <ProductInfo :product="product" />
-            <ProductForm :product="product" />
+          <div class="right">
+            <div class="right-inner">
+              <ProductInfo :product="product" />
+              <ProductForm :product="product" />
+            </div>
           </div>
         </div>
-      </div>
-    </container>
-  </section>
+        <Loader v-else />
+      </ComponentFade>
+    </Container>
+  </Section>
 </template>
 
 <script lang="ts">
@@ -27,6 +30,9 @@ import { useRoute } from "vue-router";
 
 import useStore from "@/composables/useStore";
 import Container from "@/components/common/Container.vue";
+import ComponentFade from "@/components/common/ComponentFade.vue";
+import Loader from "@/components/common/Loader.vue";
+import Section from "@/components/common/Section.vue";
 import Image from "@/components/common/Image.vue";
 import ProductForm from "@/components/products/ProductForm.vue";
 import ProductInfo from "@/components/products/ProductInfo.vue";
@@ -39,6 +45,9 @@ export default defineComponent({
     ProductInfo,
     ProductForm,
     Container,
+    Section,
+    Loader,
+    ComponentFade,
     Image,
   },
 
@@ -72,17 +81,12 @@ export default defineComponent({
       metaDescription.content = oldMetaDescription;
     });
 
-    return { product };
+    return { product, isLoading };
   },
 });
 </script>
 
 <style scoped>
-section {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
 .wrapper {
   width: 100%;
   display: grid;
@@ -114,6 +118,10 @@ section {
 
   .left {
     grid-row: 2 / 3;
+  }
+
+  .right .right-inner {
+    padding: 24px;
   }
 }
 </style>

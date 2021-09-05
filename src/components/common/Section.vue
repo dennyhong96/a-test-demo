@@ -1,31 +1,28 @@
 <template>
-  <div>
+  <section>
     <slot></slot>
-  </div>
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "Container",
+  name: "Section",
 });
 </script>
 
 <style scoped>
-div {
-  max-width: 1300px;
-  padding-left: 32px;
-  padding-right: 32px;
-  margin-left: auto;
-  margin-right: auto;
+section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
   height: 100%;
 }
 
 @media (max-width: 600px) {
-  div {
-    padding-left: 24px;
-    padding-right: 24px;
+  section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 }
 </style>

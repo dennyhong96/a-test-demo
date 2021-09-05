@@ -6,19 +6,19 @@
     <router-view />
   </main>
   <Footer />
+  <SalesRepPopup />
 
-  <SalesRepWidget />
   <TeleportLink direction="back" />
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
+import useStore from "@/composables/useStore";
 import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
 import TeleportLink from "@/components/widgets/TeleportLink.vue";
-import SalesRepWidget from "@/components/widgets/SalesRepWidget.vue";
-import useStore from "@/composables/useStore";
+import SalesRepPopup from "@/components/widgets/SalesRepPopup.vue";
 
 export default defineComponent({
   name: "App",
@@ -27,17 +27,19 @@ export default defineComponent({
     Header,
     Footer,
     TeleportLink,
-    SalesRepWidget,
+    SalesRepPopup,
   },
 
   setup() {
     const store = useStore();
-
     store.dispatch("loadData");
-
     return {};
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+main {
+  min-height: calc(100vh - var(--height-header));
+}
+</style>

@@ -59,7 +59,7 @@ import useStore from "@/composables/useStore";
 import { computed, defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: "SalesRefWidget",
+  name: "SalesRepPopup",
 
   setup() {
     const store = useStore();
@@ -164,6 +164,11 @@ p:not(:last-of-type) {
 }
 
 @media (max-width: 600px) {
+  .wrapper {
+    bottom: 24px;
+    right: 24px;
+  }
+
   .wrapper button {
     width: 48px;
     height: 48px;
