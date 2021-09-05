@@ -4,7 +4,7 @@ import { InjectionKey } from "vue";
 import { Company } from "@/types/Company";
 import { Product } from "@/types/Product";
 import { SalesRep } from "@/types/SalesRep";
-import { Cart } from "@/types/Cart";
+import { Cart, CartItem } from "@/types/Cart";
 import { REQUEST_URL } from "@/constants";
 import { formatCurrency, generateLogoSrc } from "@/utils";
 
@@ -40,6 +40,7 @@ export default createStore<State>({
       state.isLoading = false;
     },
 
+    // Cart mutations
     addToCart(state, { productId, quantity }) {
       if (state.Cart[productId]) {
         state.Cart = {
@@ -95,11 +96,11 @@ export default createStore<State>({
       });
     },
 
+    // Cart actions
     addToCart(context: ActionContext<State, State>, { productId, quantity }) {
       const cartItem = context.state.Products.find((product) => product.ItemID === productId);
 
       if (!cartItem) return;
-
       if (quantity > cartItem.OnHandQuantity) {
         return alert(
           `Not enough quantity. There are only ${cartItem.OnHandQuantity} ${cartItem.ItemName} left.`,
@@ -121,7 +122,6 @@ export default createStore<State>({
       const confirmed = confirm(
         `Are you sure your want to remove ${quantity} units of '${cartItem.ItemName}' from cart?`,
       );
-
       if (!confirmed) return;
 
       context.commit("removeFromCart", {
@@ -131,16 +131,45 @@ export default createStore<State>({
   },
 
   getters: {
+    // Product getters
     getProductByItemId: (state) => (itemId: string) => {
       const foundProduct = state.Products.find((p) => p.ItemID === itemId);
-
       if (!foundProduct) return null;
-
       return {
         ...foundProduct,
         BasePrice: formatCurrency(foundProduct.BasePrice),
         OnHandQuantity: foundProduct.OnHandQuantity <= 0 ? 0 : foundProduct.OnHandQuantity,
       };
+    },
+
+    // Cart getters
+    listCartItems: (state): CartItem[] => {
+      return Object.entries(state.Cart)
+        .map(([productId, quantity]) => {
+          const cartItem = state.Products.find((product) => product.ItemID === productId);
+          if (!cartItem) return;
+          return {
+            ...cartItem,
+            cartQuantity: quantity,
+            lineTotal: formatCurrency((cartItem?.BasePrice ?? 0) * quantity),
+          };
+        })
+        .filter(Boolean) as CartItem[];
+    },
+
+    getCartTotal: (state, getters) => {
+      const cartItems: CartItem[] = getters.listCartItems;
+      const sum = cartItems.reduce((accumulator, currentItem) => {
+        return accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity;
+      }, 0);
+      return formatCurrency(sum);
+    },
+
+    countCartItems: (state, getters) => {
+      const cartItems: CartItem[] = getters.listCartItems;
+      return cartItems.reduce((accumulator, currentCartItem) => {
+        return accumulator + currentCartItem.cartQuantity;
+      }, 0);
     },
   },
 });

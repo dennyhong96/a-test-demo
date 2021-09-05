@@ -12,15 +12,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 
+import useProducts from "@/composables/products/useProducts";
+import useIsLoading from "@/composables/common/useIsLoading";
 import Container from "@/components/common/Container.vue";
 import Loader from "@/components/common/Loader.vue";
 import Section from "@/components/common/Section.vue";
 import ComponentFade from "@/components/common/ComponentFade.vue";
-import useStore from "@/composables/useStore";
 import ProductCard from "@/components/products/ProductCard.vue";
-import { formatCurrency } from "@/utils";
 
 export default defineComponent({
   name: "ProductList",
@@ -34,19 +34,9 @@ export default defineComponent({
   },
 
   setup() {
-    const store = useStore();
-
-    const isLoading = computed(() => store.state.isLoading);
-    const products = computed(() =>
-      store.state.Products.map((product) => ({
-        ...product,
-        BasePrice: formatCurrency(product.BasePrice),
-      })),
-    );
-
     return {
-      isLoading,
-      products,
+      ...useProducts(),
+      ...useIsLoading(),
     };
   },
 });

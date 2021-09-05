@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import useStore from "@/composables/useStore";
+import useStore from "@/composables/common/useStore";
 import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
 import TeleportLink from "@/components/widgets/TeleportLink.vue";

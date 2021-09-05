@@ -22,14 +22,14 @@
       </svg>
 
       <span>
-        {{ totalItems }}
+        {{ cartItemsCount }}
       </span>
     </button>
 
     <!-- Cart Dropdown -->
     <transition name="drop">
       <div v-if="isCartOpen" class="cart">
-        <ul v-if="totalItems">
+        <ul v-if="cartItemsCount">
           <li v-for="cartItem in cartItems" :key="cartItem.ItemID">
             <div>
               {{ cartItem.cartQuantity }} x <span>{{ cartItem.ItemName }}</span>
@@ -66,63 +66,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 
-import useStore from "@/composables/useStore";
-import { formatCurrency } from "@/utils";
+import useCart from "@/composables/cart/useCart";
 
 export default defineComponent({
   setup() {
-    const store = useStore();
-    const isCartOpen = ref(false);
-
-    const handleToggleCart = () => {
-      isCartOpen.value = !isCartOpen.value;
-    };
-
-    const handleClickOutside = () => {
-      isCartOpen.value = false;
-    };
-
-    const handleRemoveCartItem = (productId: string | undefined) => {
-      if (!productId) return;
-      store.dispatch("removeFromCart", { productId });
-    };
-
-    const cartItems = computed(() => {
-      return Object.entries(store.state.Cart).map(([productId, quantity]) => {
-        const cartItem = store.state.Products.find((product) => product.ItemID === productId);
-        return {
-          ...cartItem,
-          cartQuantity: quantity,
-          lineTotal: formatCurrency((cartItem?.BasePrice ?? 0) * quantity),
-        };
-      });
-    });
-
-    const total = computed(() => {
-      const sum = cartItems.value.reduce((accumulator, currentItem) => {
-        return accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity;
-      }, 0);
-      return formatCurrency(sum);
-    });
-
-    // const totalItems = computed(() => {
-    //   return cartItems.value.reduce((accumulator, currentCartItem) => {
-    //     return accumulator + currentCartItem.cartQuantity;
-    //   }, 0);
-    // });
-
-    return {
-      isCartOpen,
-      cartItems,
-      total,
-      totalItems,
-
-      handleToggleCart,
-      handleClickOutside,
-      handleRemoveCartItem,
-    };
+    return useCart();
   },
 });
 </script>

@@ -1,11 +1,11 @@
 <template>
-  <form @submit="handleSubmit">
+  <form v-if="product" @submit="handleSubmit">
     <div class="form-row">
       <!-- -1 button -->
       <button
         @click="handleReduceQty"
         type="button"
-        :disabled="product.OnHandQuantity <= 0 || num <= 1"
+        :disabled="product.OnHandQuantity <= 0 || addToCartQuantity <= 1"
         aria-label="Decrease quantity"
       >
         -
@@ -17,7 +17,7 @@
         step="1"
         min="1"
         :max="product.OnHandQuantity"
-        v-model="num"
+        v-model="addToCartQuantity"
         :disabled="product.OnHandQuantity <= 0"
       />
 
@@ -25,7 +25,7 @@
       <button
         @click="handleIncreaseQty"
         type="button"
-        :disabled="product.OnHandQuantity <= 0 || num >= product.OnHandQuantity"
+        :disabled="product.OnHandQuantity <= 0 || addToCartQuantity >= product.OnHandQuantity"
         aria-label="Increase quantity"
       >
         +
@@ -35,7 +35,11 @@
     <!-- Add to cart button -->
     <button
       class="add-to-cart"
-      :disabled="product.OnHandQuantity <= 0 || num < 1 || num > product.OnHandQuantity"
+      :disabled="
+        product.OnHandQuantity <= 0 ||
+          addToCartQuantity < 1 ||
+          addToCartQuantity > product.OnHandQuantity
+      "
       type="submit"
     >
       Add to cart
@@ -51,13 +55,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { defineComponent, PropType } from "vue";
 
 import { Product } from "@/types/Product";
-import useStore from "@/composables/useStore";
-import { pluralize } from "@/utils";
-
-const NOTIFICATION_TIMEOUT = 3000;
+import useAddToCart from "@/composables/cart/useAddToCart";
 
 export default defineComponent({
   name: "ProductForm",
@@ -67,62 +68,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    const store = useStore();
-
-    const currentProduct = computed(() => props.product);
-
-    const num = ref(1);
-
-    const numAddedToCart = ref(0);
-
-    const handleReduceQty = () => {
-      if (num.value === 1) return;
-      num.value--;
-    };
-
-    const handleIncreaseQty = () => {
-      if (num.value === currentProduct.value?.OnHandQuantity) return;
-      num.value++;
-    };
-
-    let timeout: number;
-
-    const handleSubmit = (evt: Event) => {
-      evt.preventDefault();
-
-      if (!currentProduct.value) return;
-      if (num.value < 1) return;
-      if (num.value > currentProduct.value?.OnHandQuantity) return;
-
-      if (timeout) clearTimeout(timeout);
-
-      store.dispatch("addToCart", {
-        productId: currentProduct.value?.ItemID,
-        quantity: num.value,
-      });
-
-      numAddedToCart.value = num.value;
-      timeout = setTimeout(() => {
-        numAddedToCart.value = 0;
-      }, NOTIFICATION_TIMEOUT);
-
-      num.value = 1;
-    };
-
-    return {
-      num,
-      numAddedToCart,
-
-      handleReduceQty,
-      handleIncreaseQty,
-      handleSubmit,
-    };
-  },
-
-  computed: {
-    addedToCartNotification() {
-      return `${this.numAddedToCart} ${pluralize("unit", this.numAddedToCart)} added to your cart.`;
-    },
+    return useAddToCart(props.product);
   },
 });
 </script>

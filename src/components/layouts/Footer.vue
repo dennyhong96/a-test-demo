@@ -17,7 +17,7 @@ import { computed, defineComponent } from "vue";
 
 import Container from "@/components/common/Container.vue";
 import Section from "@/components/common/Section.vue";
-import useStore from "@/composables/useStore";
+import useCompany from "@/composables/company/useCompany";
 
 export default defineComponent({
   name: "Footer",
@@ -28,12 +28,8 @@ export default defineComponent({
   },
 
   setup() {
-    const store = useStore();
-
-    const company = computed(() => store.state.Company);
-
+    const company = useCompany();
     const year = computed(() => new Date().getFullYear());
-
     return { company, year };
   },
 });

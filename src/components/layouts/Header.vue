@@ -14,11 +14,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 
-import useStore from "@/composables/useStore";
 import CartDropdown from "@/components/cart/CartDropdown.vue";
 import Container from "@/components/common/Container.vue";
+import useCompany from "@/composables/company/useCompany";
 
 export default defineComponent({
   name: "Header",
@@ -29,13 +29,8 @@ export default defineComponent({
   },
 
   setup() {
-    const store = useStore();
-
-    const company = computed(() => store.state.Company);
-
-    return {
-      company,
-    };
+    const company = useCompany();
+    return { company };
   },
 });
 </script>

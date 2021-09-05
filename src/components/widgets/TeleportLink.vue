@@ -22,13 +22,13 @@ export default defineComponent({
     const handleTeleport = (evt: Event) => {
       evt.preventDefault();
 
-      // Back to top of the page
+      // Go back to the top of the page
       if (prop.direction === "back") {
         const skipToTopLink = document.getElementById("skip-link");
         return skipToTopLink?.focus();
       }
 
-      // Skip to main content
+      // Skip header and go to the main content
       const main = document.getElementById("main");
       if (!main) return;
       const focusableElementsInMain = [

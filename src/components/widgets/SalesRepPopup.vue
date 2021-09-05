@@ -1,9 +1,8 @@
 <template>
   <div class="wrapper" v-click-outside="handleClickOutside">
     <!-- Sales Rep Info  -->
-
     <transition name="scale-fade">
-      <div v-if="isWidgetOpen" class="sales-info">
+      <div v-if="isWidgetOpen && salesRep" class="sales-info">
         <div class="header">
           <p>
             Hi, this is {{ salesRep.FirstName }} {{ salesRep.LastName }}
@@ -52,18 +51,17 @@
 </template>
 
 <script lang="ts">
-import useStore from "@/composables/useStore";
-import { computed, defineComponent, ref } from "vue";
+import { defineComponent, ref } from "vue";
+
+import useSalesRep from "@/composables/salesRep/useSalesRep";
 
 export default defineComponent({
   name: "SalesRepPopup",
 
   setup() {
-    const store = useStore();
+    const salesRep = useSalesRep();
 
     const isWidgetOpen = ref(false);
-
-    const salesRep = computed(() => store.state.SalesRep);
 
     const handleToggleWidget = () => {
       isWidgetOpen.value = !isWidgetOpen.value;
