@@ -24,7 +24,7 @@ function useAddToCart(product: Product | undefined) {
     addToCartQuantity.value++;
   };
 
-  let timeout: number;
+  let timeout: ReturnType<typeof setTimeout>;
   const handleSubmit = (evt: Event) => {
     evt.preventDefault();
 

@@ -20,6 +20,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/vue": "^6.4.2",
+    "@types/isomorphic-fetch": "^0.0.35",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -38,6 +39,7 @@
     "husky": "^7.0.2",
     "isomorphic-fetch": "^3.0.0",
     "lint-staged": "^11.1.2",
+    "msw": "^0.35.0",
     "prettier": "^1.19.1",
     "typescript": "~4.1.5",
     "vue-jest": "^5.0.0-0"

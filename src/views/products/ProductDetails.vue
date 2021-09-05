@@ -53,21 +53,25 @@ export default defineComponent({
     const company = useCompany();
 
     // Setup document title and meta description
-    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement; // doesn't exist in tests
 
-    const oldTitle = document.title;
-    const oldMetaDescription = metaDescription.content;
+    const oldTitle = document?.title ?? "";
+    const oldMetaDescription = metaDescription?.content ?? "";
 
     document.title = isLoading.value
       ? oldTitle
       : `${product.value?.ItemName} | ${company.value?.CompanyName}`;
-    metaDescription.content = isLoading.value
-      ? oldMetaDescription
-      : `${product.value?.Description ?? oldMetaDescription}`;
+    if (metaDescription) {
+      metaDescription.content = isLoading.value
+        ? oldMetaDescription
+        : `${product.value?.Description ?? oldMetaDescription}`;
+    }
 
     onUnmounted(() => {
       document.title = oldTitle;
-      metaDescription.content = oldMetaDescription;
+      if (metaDescription) {
+        metaDescription.content = oldMetaDescription;
+      }
     });
 
     return { product, isLoading };
