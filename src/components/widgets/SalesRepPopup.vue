@@ -13,12 +13,9 @@
         <div class="body">
           <p>
             If you have any inquiries, please don't hesitate to call me at
-            <a
-              target="_blank"
-              rel="noreferrer noopener"
-              :href="`tel:${salesRep.CellPhone}`"
-              >{{ salesRep.CellPhone }}</a
-            >
+            <a target="_blank" rel="noreferrer noopener" :href="`tel:${salesRep.CellPhone}`">{{
+              salesRep.CellPhone
+            }}</a>
             , or emil me at
             <a
               target="_blank"

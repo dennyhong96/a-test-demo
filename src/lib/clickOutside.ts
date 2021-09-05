@@ -5,10 +5,7 @@ interface ClickOutsideElement extends HTMLElement {
 }
 
 export default {
-  beforeMount: function(
-    el: ClickOutsideElement,
-    binding: DirectiveBinding
-  ): void {
+  beforeMount: function(el: ClickOutsideElement, binding: DirectiveBinding): void {
     const ourClickEventHandler = (event: MouseEvent) => {
       if (!el.contains(event.target as HTMLElement) && el !== event.target) {
         binding.value(event);

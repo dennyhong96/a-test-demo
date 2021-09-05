@@ -7,9 +7,7 @@
       <span>Product ID:</span>
       {{ product.ProductID }}
     </p>
-    <p v-if="product.Description">
-      <span>Description:</span> {{ product.Description }}
-    </p>
+    <p v-if="product.Description"><span>Description:</span> {{ product.Description }}</p>
     <p><span>Dimensions:</span> {{ product.Dimensions }}</p>
     <p v-if="product.OnHandQuantity">
       <span>Units Available:</span>

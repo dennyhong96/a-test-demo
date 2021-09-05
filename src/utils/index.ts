@@ -19,7 +19,7 @@ export function optimizeProductImageSrc(
     smImageSize?: number;
     mdImageSize?: number;
     lgImageSize?: number;
-  } = {}
+  } = {},
 ): {
   baseSrc: string;
   srcset: string;

@@ -58,9 +58,7 @@
             </div>
           </li>
         </ul>
-        <div v-else>
-          Happy shopping! <span aria-label="Shopping cart icon">🛒</span>
-        </div>
+        <div v-else>Happy shopping! <span aria-label="Shopping cart icon">🛒</span></div>
         <div class="total"><span>Total:</span> {{ total }}</div>
       </div>
     </transition>
@@ -93,9 +91,7 @@ export default defineComponent({
 
     const cartItems = computed(() => {
       return Object.entries(store.state.Cart).map(([productId, quantity]) => {
-        const cartItem = store.state.Products.find(
-          (product) => product.ItemID === productId
-        );
+        const cartItem = store.state.Products.find((product) => product.ItemID === productId);
         return {
           ...cartItem,
           cartQuantity: quantity,
@@ -106,9 +102,7 @@ export default defineComponent({
 
     const total = computed(() => {
       const sum = cartItems.value.reduce((accumulator, currentItem) => {
-        return (
-          accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity
-        );
+        return accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity;
       }, 0);
       return formatCurrency(sum);
     });

@@ -4,11 +4,7 @@
       <ComponentFade>
         <div v-if="!isLoading && product" class="wrapper">
           <div class="left">
-            <Image
-              :src="product.PhotoName"
-              :alt="product.ItemName"
-              :aspectRatio="1 / 1"
-            />
+            <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
           </div>
 
           <div class="right">
@@ -62,9 +58,7 @@ export default defineComponent({
     const companyName = computed(() => store.state.Company?.CompanyName);
 
     // Setup document title and meta description
-    const metaDescription = document.querySelector(
-      'meta[name="description"]'
-    ) as HTMLMetaElement;
+    const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement;
 
     const oldTitle = document.title;
     const oldMetaDescription = metaDescription.content;

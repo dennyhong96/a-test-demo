@@ -3,11 +3,7 @@
     <Container>
       <ComponentFade>
         <ul v-if="!isLoading">
-          <ProductCard
-            v-for="product in products"
-            :key="product.ItemID"
-            :product="product"
-          />
+          <ProductCard v-for="product in products" :key="product.ItemID" :product="product" />
         </ul>
         <Loader v-else />
       </ComponentFade>
@@ -45,7 +41,7 @@ export default defineComponent({
       store.state.Products.map((product) => ({
         ...product,
         BasePrice: formatCurrency(product.BasePrice),
-      }))
+      })),
     );
 
     return {

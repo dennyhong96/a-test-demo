@@ -35,9 +35,7 @@
     <!-- Add to cart button -->
     <button
       class="add-to-cart"
-      :disabled="
-        product.OnHandQuantity <= 0 || num < 1 || num > product.OnHandQuantity
-      "
+      :disabled="product.OnHandQuantity <= 0 || num < 1 || num > product.OnHandQuantity"
       type="submit"
     >
       Add to cart
@@ -123,10 +121,7 @@ export default defineComponent({
 
   computed: {
     addedToCartNotification() {
-      return `${this.numAddedToCart} ${pluralize(
-        "unit",
-        this.numAddedToCart
-      )} added to your cart.`;
+      return `${this.numAddedToCart} ${pluralize("unit", this.numAddedToCart)} added to your cart.`;
     },
   },
 });

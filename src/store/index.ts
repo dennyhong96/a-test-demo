@@ -56,7 +56,7 @@ export default createStore<State>({
       state.Products = state.Products.map((product) =>
         product.ItemID === productId
           ? { ...product, OnHandQuantity: product.OnHandQuantity - quantity }
-          : product
+          : product,
       );
     },
 
@@ -73,7 +73,7 @@ export default createStore<State>({
       state.Products = state.Products.map((product) =>
         product.ItemID === productId
           ? { ...product, OnHandQuantity: product.OnHandQuantity + quantity }
-          : product
+          : product,
       );
     },
   },
@@ -96,15 +96,13 @@ export default createStore<State>({
     },
 
     addToCart(context: ActionContext<State, State>, { productId, quantity }) {
-      const cartItem = context.state.Products.find(
-        (product) => product.ItemID === productId
-      );
+      const cartItem = context.state.Products.find((product) => product.ItemID === productId);
 
       if (!cartItem) return;
 
       if (quantity > cartItem.OnHandQuantity) {
         return alert(
-          `Not enough quantity. There are only ${cartItem.OnHandQuantity} ${cartItem.ItemName} left.`
+          `Not enough quantity. There are only ${cartItem.OnHandQuantity} ${cartItem.ItemName} left.`,
         );
       }
 
@@ -115,15 +113,13 @@ export default createStore<State>({
     },
 
     removeFromCart(context: ActionContext<State, State>, { productId }) {
-      const cartItem = context.state.Products.find(
-        (product) => product.ItemID === productId
-      );
+      const cartItem = context.state.Products.find((product) => product.ItemID === productId);
       const quantity = context.state.Cart[productId];
 
       if (!cartItem || !quantity) return;
 
       const confirmed = confirm(
-        `Are you sure your want to remove ${quantity} units of '${cartItem.ItemName}' from cart?`
+        `Are you sure your want to remove ${quantity} units of '${cartItem.ItemName}' from cart?`,
       );
 
       if (!confirmed) return;
@@ -143,8 +139,7 @@ export default createStore<State>({
       return {
         ...foundProduct,
         BasePrice: formatCurrency(foundProduct.BasePrice),
-        OnHandQuantity:
-          foundProduct.OnHandQuantity <= 0 ? 0 : foundProduct.OnHandQuantity,
+        OnHandQuantity: foundProduct.OnHandQuantity <= 0 ? 0 : foundProduct.OnHandQuantity,
       };
     },
   },

@@ -1,13 +1,7 @@
 <template>
   <li>
-    <router-link
-      :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }"
-    >
-      <Image
-        :src="product.PhotoName"
-        :alt="product.ItemName"
-        :aspectRatio="1 / 1"
-      />
+    <router-link :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }">
+      <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
       <div>
         <h3>{{ product.ItemName }}</h3>
         <h4>{{ product.BasePrice }}</h4>

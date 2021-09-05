@@ -15,9 +15,7 @@ const routes: Array<RouteRecordRaw> = [
 
     // Code split
     component: () =>
-      import(
-        /* webpackChunkName: "productDetails" */ "@/views/products/ProductDetails.vue"
-      ),
+      import(/* webpackChunkName: "productDetails" */ "@/views/products/ProductDetails.vue"),
     props: true, // Accept any route parameters as props
   },
 ];
