@@ -1,15 +1,17 @@
 <template>
   <form @submit="handleSubmit">
     <div class="form-row">
+      <!-- -1 button -->
       <button
         @click="handleReduceQty"
         type="button"
-        :disabled="product.OnHandQuantity <= 0"
+        :disabled="product.OnHandQuantity <= 0 || num <= 1"
         aria-label="Decrease quantity"
       >
         -
       </button>
 
+      <!-- Number input -->
       <input
         type="number"
         step="1"
@@ -19,24 +21,29 @@
         :disabled="product.OnHandQuantity <= 0"
       />
 
+      <!-- +1 button -->
       <button
         @click="handleIncreaseQty"
         type="button"
-        :disabled="product.OnHandQuantity <= 0"
+        :disabled="product.OnHandQuantity <= 0 || num >= product.OnHandQuantity"
         aria-label="Increase quantity"
       >
         +
       </button>
     </div>
 
+    <!-- Add to cart button -->
     <button
       class="add-to-cart"
-      :disabled="product.OnHandQuantity <= 0 || num < 1"
+      :disabled="
+        product.OnHandQuantity <= 0 || num < 1 || num > product.OnHandQuantity
+      "
       type="submit"
     >
       Add to cart
     </button>
 
+    <!-- Notification -->
     <transition name="fade">
       <p v-if="numAddedToCart" class="added-to-cart">
         {{ addedToCartNotification }}
@@ -51,6 +58,8 @@ import { computed, defineComponent, PropType, ref } from "vue";
 import { Product } from "@/types/Product";
 import useStore from "@/composables/useStore";
 import { pluralize } from "@/utils";
+
+const NOTIFICATION_TIMEOUT = 3000;
 
 export default defineComponent({
   name: "ProductForm",
@@ -97,7 +106,7 @@ export default defineComponent({
       numAddedToCart.value = num.value;
       timeout = setTimeout(() => {
         numAddedToCart.value = 0;
-      }, 2000);
+      }, NOTIFICATION_TIMEOUT);
 
       num.value = 1;
     };
@@ -111,6 +120,7 @@ export default defineComponent({
       handleSubmit,
     };
   },
+
   computed: {
     addedToCartNotification() {
       return `${this.numAddedToCart} ${pluralize(
@@ -162,7 +172,7 @@ form input:disabled {
 .form-row button:disabled:hover,
 .form-row button:disabled:focus,
 .form-row button:disabled:active {
-  background: initial;
+  background: var(--color-gray-100);
 }
 
 .form-row button:first-of-type {

@@ -99,7 +99,7 @@ export default defineComponent({
         return {
           ...cartItem,
           cartQuantity: quantity,
-          lineTotal: formatCurrency(cartItem?.BasePrice ?? 0 * quantity),
+          lineTotal: formatCurrency((cartItem?.BasePrice ?? 0) * quantity),
         };
       });
     });

@@ -76,7 +76,9 @@ p {
     will-change: transform;
   }
 
-  a:hover {
+  a:hover,
+  a:focus,
+  a:active {
     transform: scale(1.0175);
     transition: 0.2s ease-in;
     -webkit-box-shadow: var(--shadow-raised);
