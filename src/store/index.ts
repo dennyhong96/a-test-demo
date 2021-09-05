@@ -1,4 +1,4 @@
-import { createStore, ActionContext, Store } from "vuex";
+import { createStore, ActionContext, Store, StoreOptions } from "vuex";
 import { InjectionKey } from "vue";
 
 import { Company } from "@/types/Company";
@@ -23,7 +23,7 @@ interface ResponseData extends Company {
 
 export const key: InjectionKey<Store<State>> = Symbol();
 
-export default createStore<State>({
+export const storeOptions: StoreOptions<State> = {
   state: {
     Products: [],
     Company: null,
@@ -143,7 +143,7 @@ export default createStore<State>({
     },
 
     // Cart getters
-    listCartItems: (state): CartItem[] => {
+    listCartItems: (state) => () => {
       return Object.entries(state.Cart)
         .map(([productId, quantity]) => {
           const cartItem = state.Products.find((product) => product.ItemID === productId);
@@ -157,19 +157,21 @@ export default createStore<State>({
         .filter(Boolean) as CartItem[];
     },
 
-    getCartTotal: (state, getters) => {
-      const cartItems: CartItem[] = getters.listCartItems;
+    getCartTotal: (state, getters) => () => {
+      const cartItems: CartItem[] = getters.listCartItems();
       const sum = cartItems.reduce((accumulator, currentItem) => {
         return accumulator + (currentItem.BasePrice ?? 0) * currentItem.cartQuantity;
       }, 0);
       return formatCurrency(sum);
     },
 
-    countCartItems: (state, getters) => {
-      const cartItems: CartItem[] = getters.listCartItems;
+    countCartItems: (state, getters) => () => {
+      const cartItems: CartItem[] = getters.listCartItems();
       return cartItems.reduce((accumulator, currentCartItem) => {
         return accumulator + currentCartItem.cartQuantity;
       }, 0);
     },
   },
-});
+};
+
+export default createStore<State>(storeOptions);

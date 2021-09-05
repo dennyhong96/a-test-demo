@@ -5,9 +5,9 @@ import { CartItem } from "@/types/Cart";
 
 function useCart() {
   const store = useStore();
-  const cartItems = computed<CartItem[]>(() => store.getters.listCartItems);
-  const total = computed<string>(() => store.getters.getCartTotal);
-  const cartItemsCount = computed<number>(() => store.getters.countCartItems);
+  const cartItems = computed<CartItem[]>(() => store.getters.listCartItems());
+  const total = computed<string>(() => store.getters.getCartTotal());
+  const cartItemsCount = computed<number>(() => store.getters.countCartItems());
 
   const isCartOpen = ref(false);
 
