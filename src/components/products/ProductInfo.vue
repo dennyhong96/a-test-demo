@@ -9,7 +9,7 @@
     </p>
     <p v-if="product.Description"><span>Description:</span> {{ product.Description }}</p>
     <p><span>Dimensions:</span> {{ product.Dimensions }}</p>
-    <p v-if="product.OnHandQuantity">
+    <p v-if="product.OnHandQuantity > 0" data-testId="product-available-quantity">
       <span>Units Available:</span>
       {{ product.OnHandQuantity }}
     </p>

@@ -1,12 +1,16 @@
+import { Cart } from "@/types/Cart";
 import { Company } from "@/types/Company";
+import { Product } from "@/types/Product";
 import { generateLogoSrc } from "@/utils";
 import data from "@/__tests__/mocks/_data.json";
 
-export const AVAILABLE_PRODUCTS = data.items.filter(
+export const AVAILABLE_PRODUCTS: Product[] = data.items.filter(
   (item) => !!item.BasePrice && item.OnHandQuantity > 5,
 );
 
-export const UNAVAILABLE_PRODUCTS = data.items.filter((item) => item.OnHandQuantity <= 0);
+export const UNAVAILABLE_PRODUCTS: Product[] = data.items.filter(
+  (item) => item.OnHandQuantity <= 0,
+);
 
 export const COMPANY: Company = {
   CompanyName: data.CompanyName,
@@ -24,6 +28,8 @@ export const LINE_ITEMS = AVAILABLE_PRODUCTS.map((product) => {
   };
 });
 
-export const CART_FILLED = LINE_ITEMS.reduce((acc, cur) => {
+export const CART_FILLED: Cart = LINE_ITEMS.reduce((acc, cur) => {
   return { ...acc, [cur.ItemID]: cur.quantityToPurchase };
 }, {});
+
+export const SALES_REP = data.SalesRep;

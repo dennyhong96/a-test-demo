@@ -1,6 +1,7 @@
 import { render, fireEvent, screen } from "@/__tests__/testUtils";
 import { server } from "@/__tests__/mocks/server";
 import App from "@/App.vue";
+import data from "@/__tests__/mocks/_data.json";
 
 describe("App component", () => {
   beforeAll(() => server.listen());
@@ -37,6 +38,8 @@ describe("App component", () => {
     fireEvent.click(logo);
 
     const productCards = await screen.findAllByRole("listitem");
-    expect(productCards).toHaveLength(10);
+    expect(productCards).toHaveLength(data.items.length);
   });
+
+  // test("Should add products to cart and delete line items from cart", () => {});
 });

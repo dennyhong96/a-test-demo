@@ -2,7 +2,7 @@
   <div class="wrapper" v-click-outside="handleClickOutside">
     <!-- Sales Rep Info  -->
     <transition name="scale-fade">
-      <div v-if="isWidgetOpen && salesRep" class="sales-info">
+      <div v-if="isWidgetOpen && salesRep" class="sales-info" data-testId="sales-rep-info">
         <div class="header">
           <p>
             Hi, this is {{ salesRep.FirstName }} {{ salesRep.LastName }}
