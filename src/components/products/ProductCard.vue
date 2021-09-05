@@ -3,7 +3,11 @@
     <router-link
       :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }"
     >
-      <Image :src="product.PhotoName" :alt="product.ItemID" />
+      <Image
+        :src="product.PhotoName"
+        :alt="product.ItemName"
+        :aspectRatio="1 / 1"
+      />
       <div>
         <h3>{{ product.ItemName }}</h3>
         <h4>{{ product.BasePrice }}</h4>
@@ -40,20 +44,9 @@ a {
   display: block;
   padding: 16px;
   height: 100%;
-
-  transition: 0.5s ease-out;
-  will-change: transform;
   border-radius: 15px;
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-}
-
-a:hover {
-  transition: 0.2s ease-in;
-  transform: scale(1.0175);
-  border-radius: 15px;
-  -webkit-box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.05);
-  box-shadow: 0px 0px 20px 6px rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: var(--shadow-standard);
+  box-shadow: var(--shadow-standard);
 }
 
 div {
@@ -75,5 +68,19 @@ p {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a {
+    transition: 0.5s ease-out;
+    will-change: transform;
+  }
+
+  a:hover {
+    transform: scale(1.0175);
+    transition: 0.2s ease-in;
+    -webkit-box-shadow: var(--shadow-raised);
+    box-shadow: var(--shadow-raised);
+  }
 }
 </style>

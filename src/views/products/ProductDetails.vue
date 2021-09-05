@@ -3,29 +3,16 @@
     <container>
       <div v-if="product" class="wrapper">
         <div class="left">
-          <div>
-            <Image :src="product.PhotoName" :alt="product.ItemName" />
-          </div>
+          <Image
+            :src="product.PhotoName"
+            :alt="product.ItemName"
+            :aspectRatio="1 / 1"
+          />
         </div>
 
         <div class="right">
           <div class="right-inner">
-            <h1>{{ product.ItemName }}</h1>
-            <h4>{{ product.BasePrice }}</h4>
-            <p>
-              <span>Item ID:</span> {{ product.ItemID }} |
-              <span>Product ID:</span>
-              {{ product.ProductID }}
-            </p>
-            <p v-if="product.Description">
-              <span>Description:</span> {{ product.Description }}
-            </p>
-            <p><span>Dimensions:</span> {{ product.Dimensions }}</p>
-            <p>
-              <span>Units Available:</span>
-              {{ product.OnHandQuantity }}
-            </p>
-
+            <ProductInfo :product="product" />
             <ProductForm :product="product" />
           </div>
         </div>
@@ -42,12 +29,13 @@ import useStore from "@/composables/useStore";
 import Container from "@/components/common/Container.vue";
 import Image from "@/components/common/Image.vue";
 import ProductForm from "@/components/products/ProductForm.vue";
-import { formatCurrency } from "@/utils";
+import ProductInfo from "@/components/products/ProductInfo.vue";
 
 export default defineComponent({
   name: "ProductDetails",
 
   components: {
+    ProductInfo,
     ProductForm,
     Container,
     Image,
@@ -58,23 +46,10 @@ export default defineComponent({
     const route = useRoute();
 
     const product = computed(() => {
-      const foundProduct = store.state.Products.find(
-        (p) => p.ItemID === route.params.itemId
-      );
-
-      if (!foundProduct) return null;
-
-      return {
-        ...foundProduct,
-        BasePrice: formatCurrency(foundProduct.BasePrice),
-        OnHandQuantity:
-          foundProduct.OnHandQuantity <= 0 ? 0 : foundProduct.OnHandQuantity,
-      };
+      return store.getters.getProductByItemId(route.params.itemId);
     });
 
-    return {
-      product,
-    };
+    return { product };
   },
 });
 </script>
@@ -95,28 +70,8 @@ section {
 .right .right-inner {
   padding: 32px;
   border-radius: 15px;
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-}
-
-h1 {
-  font-size: 1.6rem;
-  font-weight: var(--font-weight-medium);
-}
-
-h4 {
-  font-weight: var(--font-weight-medium);
-}
-
-h1,
-h4,
-p {
-  margin-bottom: 8px;
-}
-
-p span {
-  font-weight: var(--font-weight-medium);
-  font-size: 0.9rem;
+  -webkit-box-shadow: var(--shadow-standard);
+  box-shadow: var(--shadow-standard);
 }
 
 @media (max-width: 950px) {
@@ -128,6 +83,14 @@ p span {
 @media (max-width: 600px) {
   .wrapper {
     grid-template-columns: 1fr;
+  }
+
+  .right {
+    grid-row: 1 / 2;
+  }
+
+  .left {
+    grid-row: 2 / 3;
   }
 }
 </style>

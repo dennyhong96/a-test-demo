@@ -4,7 +4,7 @@
     <button
       class="cart-toggler"
       @click="handleToggleCart"
-      :aria-label="isCartOpen ? 'Close cart' : 'Open cart'"
+      :aria-label="isCartOpen ? 'Close shopping cart' : 'Open shopping cart'"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,38 +27,43 @@
     </button>
 
     <!-- Cart Dropdown -->
-    <div v-if="isCartOpen" class="cart">
-      <ul>
-        <li v-for="cartItem in cartItems" :key="cartItem.ItemID">
-          <div>
-            {{ cartItem.cartQuantity }} x <span>{{ cartItem.ItemName }}</span>
-          </div>
-          <div>
-            - {{ cartItem.lineTotal }}
-            <button
-              :aria-label="`Remove cart item - ${cartItem.ItemName}`"
-              @click="handleRemoveCartItem(cartItem.ItemID)"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <transition name="drop">
+      <div v-if="isCartOpen" class="cart">
+        <ul v-if="totalItems">
+          <li v-for="cartItem in cartItems" :key="cartItem.ItemID">
+            <div>
+              {{ cartItem.cartQuantity }} x <span>{{ cartItem.ItemName }}</span>
+            </div>
+            <div>
+              - {{ cartItem.lineTotal }}
+              <button
+                :aria-label="`Remove cart item - ${cartItem.ItemName}`"
+                @click="handleRemoveCartItem(cartItem.ItemID)"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                />
-              </svg>
-            </button>
-          </div>
-        </li>
-      </ul>
-      <div class="total"><span>Total:</span> {{ total }}</div>
-    </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+              </button>
+            </div>
+          </li>
+        </ul>
+        <div v-else>
+          Happy shopping! <span aria-label="Shopping cart icon">🛒</span>
+        </div>
+        <div class="total"><span>Total:</span> {{ total }}</div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -163,23 +168,40 @@ export default defineComponent({
   text-align: center;
   font-weight: var(--font-weight-bold);
   border: 2px solid var(--color-gray-900);
-  padding-bottom: 1px;
+  padding-bottom: 2px;
 }
 
 .cart {
   min-width: min(calc(100vh - 64px), 200px);
   position: absolute;
   right: 0;
-  top: calc(100% + 8px);
+  top: calc(100% + 16px);
   background: var(--color-white);
+  transform-origin: right top;
+  will-change: transform;
 
   padding: 16px;
   font-size: 0.9rem;
   white-space: nowrap;
 
   border-radius: 10px;
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: var(--shadow-standard);
+  box-shadow: var(--shadow-standard);
+}
+
+.cart.drop-enter-active {
+  opacity: 0;
+  transform: translateY(-25px);
+}
+
+.cart.drop-enter-to {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.cart.drop-leave-to {
+  transform: scale(0.9) translateY(-25px);
+  opacity: 0;
 }
 
 .cart li {
@@ -207,12 +229,6 @@ export default defineComponent({
   margin-left: 4px;
 }
 
-@media (max-width: 600px) {
-  .cart li span {
-    max-width: 75px;
-  }
-}
-
 .cart li button {
   width: 28px;
   height: 28px;
@@ -224,9 +240,6 @@ export default defineComponent({
   margin-left: 4px;
   padding: 4px;
   border-radius: 4px;
-
-  transition: 0.3s ease-out;
-  will-change: transform;
 }
 
 .cart li button svg {
@@ -254,5 +267,37 @@ export default defineComponent({
 
 .cart .total span {
   font-weight: var(--font-weight-medium);
+}
+
+@media (max-width: 600px) {
+  .cart li span {
+    max-width: 75px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cart-toggler {
+    transition: 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .cart-toggler:hover,
+  .cart-toggler:focus,
+  .cart-toggler:active {
+    transform: scale(1.1);
+  }
+
+  .cart.drop-enter-active {
+    transition: 0.3s;
+  }
+
+  .cart.drop-leave-active {
+    transition: 0.45s;
+  }
+
+  .cart li button {
+    transition: 0.3s ease-out;
+    will-change: transform;
+  }
 }
 </style>

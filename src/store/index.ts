@@ -6,7 +6,7 @@ import { Product } from "@/types/Product";
 import { SalesRep } from "@/types/SalesRep";
 import { Cart } from "@/types/Cart";
 import { REQUEST_URL } from "@/constants";
-import { generateLogoSrc } from "@/utils";
+import { formatCurrency, generateLogoSrc } from "@/utils";
 
 export interface State {
   Products: Product[];
@@ -132,20 +132,17 @@ export default createStore<State>({
   },
 
   getters: {
-    listProducts(state) {
-      return state.Products;
-    },
-
     getProductByItemId: (state) => (itemId: string) => {
-      return state.Products.find((product) => product.ItemID === itemId);
-    },
+      const foundProduct = state.Products.find((p) => p.ItemID === itemId);
 
-    getSalesRep(state) {
-      return state.SalesRep;
-    },
+      if (!foundProduct) return null;
 
-    getCompany(state) {
-      return state.Company;
+      return {
+        ...foundProduct,
+        BasePrice: formatCurrency(foundProduct.BasePrice),
+        OnHandQuantity:
+          foundProduct.OnHandQuantity <= 0 ? 0 : foundProduct.OnHandQuantity,
+      };
     },
   },
 });

@@ -50,8 +50,8 @@ header {
   background: var(--color-white);
   z-index: var(--z-header);
 
-  -webkit-box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
-  box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  -webkit-box-shadow: var(--shadow-standard);
+  box-shadow: var(--shadow-standard);
 }
 
 .inner {
@@ -70,16 +70,6 @@ header a img {
   height: auto;
 }
 
-@media (max-width: 600px) {
-  header a img {
-    width: 75px;
-  }
-
-  header a h4 {
-    display: none;
-  }
-}
-
 header h4 {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
@@ -89,5 +79,15 @@ header h4 {
 
 div {
   height: var(--height-header);
+}
+
+@media (max-width: 600px) {
+  header a img {
+    width: 75px;
+  }
+
+  header a h4 {
+    display: none;
+  }
 }
 </style>

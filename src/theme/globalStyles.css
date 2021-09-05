@@ -18,6 +18,7 @@
   --color-primary: hsl(224deg 30% 40%);
   --color-secondary: hsl(180deg 34% 37%);
   --color-urgent: hsl(0deg 55% 54%);
+  --color-success: hsl(144deg, 90%, 30%);
 
   --font-weight-normal: 400;
   --font-weight-medium: 550;
@@ -29,6 +30,17 @@
   --font-family-logo: ${FAMILIES.logo}; */
 
   --z-header: 1;
+
+  --shadow-standard: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
+  --shadow-raised: 0px 0px 20px 6px rgba(0, 0, 0, 0.05);
+  --shadow-button: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+@media (max-width: 600px) {
+  :root {
+    --height-header: 80px;
+  }
 }
 
 *,
@@ -79,9 +91,7 @@ img {
   max-width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1300px) {
 }
 @media (max-width: 950px) {
-}
-@media (max-width: 1300px) {
 }

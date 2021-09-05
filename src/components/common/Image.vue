@@ -1,5 +1,5 @@
 <template>
-  <picture>
+  <picture :style="{ '--aspect-ratio': aspectRatio }">
     <source :srcset="optimizedSrc.srcset" />
     <img :src="optimizedSrc.baseSrc" :alt="alt" />
   </picture>
@@ -22,6 +22,14 @@ export default defineComponent({
       required: true,
       type: String as PropType<string>,
     },
+    aspectRatio: {
+      type: Number as PropType<number>,
+    },
+  },
+
+  mounted() {
+    console.log(this.alt);
+    console.log(this.aspectRatio);
   },
 
   computed: {
@@ -33,7 +41,19 @@ export default defineComponent({
 </script>
 
 <style scoped>
+picture {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding-bottom: calc(var(--aspect-ratio) * 100 * 1%);
+}
+
 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
 }
 </style>

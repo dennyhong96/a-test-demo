@@ -33,3 +33,10 @@ export function optimizeProductImageSrc(
     `,
   };
 }
+
+export function pluralize(word: string, quantity: number): string {
+  if (quantity === 1) {
+    return word;
+  }
+  return `${word}s`;
+}

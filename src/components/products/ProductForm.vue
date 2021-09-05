@@ -36,6 +36,12 @@
     >
       Add to cart
     </button>
+
+    <transition name="fade">
+      <p v-if="numAddedToCart" class="added-to-cart">
+        {{ addedToCartNotification }}
+      </p>
+    </transition>
   </form>
 </template>
 
@@ -44,6 +50,7 @@ import { computed, defineComponent, PropType, ref } from "vue";
 
 import { Product } from "@/types/Product";
 import useStore from "@/composables/useStore";
+import { pluralize } from "@/utils";
 
 export default defineComponent({
   name: "ProductForm",
@@ -57,7 +64,9 @@ export default defineComponent({
 
     const currentProduct = computed(() => props.product);
 
-    const num = ref<number>(1);
+    const num = ref(1);
+
+    const numAddedToCart = ref(0);
 
     const handleReduceQty = () => {
       if (num.value === 1) return;
@@ -69,27 +78,46 @@ export default defineComponent({
       num.value++;
     };
 
+    let timeout: number;
+
     const handleSubmit = (evt: Event) => {
       evt.preventDefault();
+
       if (!currentProduct.value) return;
       if (num.value < 1) return;
       if (num.value > currentProduct.value?.OnHandQuantity) return;
+
+      if (timeout) clearTimeout(timeout);
 
       store.dispatch("addToCart", {
         productId: currentProduct.value?.ItemID,
         quantity: num.value,
       });
 
+      numAddedToCart.value = num.value;
+      timeout = setTimeout(() => {
+        numAddedToCart.value = 0;
+      }, 2000);
+
       num.value = 1;
     };
 
     return {
       num,
+      numAddedToCart,
 
       handleReduceQty,
       handleIncreaseQty,
       handleSubmit,
     };
+  },
+  computed: {
+    addedToCartNotification() {
+      return `${this.numAddedToCart} ${pluralize(
+        "unit",
+        this.numAddedToCart
+      )} added to your cart.`;
+    },
   },
 });
 </script>
@@ -123,15 +151,18 @@ form input:disabled {
 .form-row button {
   display: block;
   background: var(--color-gray-100);
-
-  transition: 0.3s ease-out;
-  will-change: transform;
 }
 
 .form-row button:hover,
 .form-row button:focus,
 .form-row button:active {
   background: var(--color-gray-300);
+}
+
+.form-row button:disabled:hover,
+.form-row button:disabled:focus,
+.form-row button:disabled:active {
+  background: initial;
 }
 
 .form-row button:first-of-type {
@@ -161,17 +192,58 @@ form input:disabled {
   padding: 8px 16px;
   text-transform: uppercase;
   font-weight: var(--font-weight-bold);
-
-  transition: 0.3s ease-out;
-  will-change: transform;
 }
 
-.add-to-cart:hover,
-.add-to-cart:focus,
-.add-to-cart:active {
-  -webkit-box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
-    5px 5px 15px 5px rgba(0, 0, 0, 0);
-  box-shadow: 0px 10px 13px -7px rgba(0, 0, 0, 0.5),
-    5px 5px 15px 5px rgba(0, 0, 0, 0);
+.add-to-cart:disabled:hover,
+.add-to-cart:disabled:focus,
+.add-to-cart:disabled:active {
+  -webkit-box-shadow: initial;
+  box-shadow: initial;
+}
+
+.added-to-cart {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-success);
+}
+
+.added-to-cart.fade-enter-active {
+  opacity: 0;
+}
+
+.added-to-cart.fade-enter-to {
+  opacity: 1;
+}
+
+.added-to-cart.fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .form-row button {
+    transition: 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .add-to-cart {
+    transition: 0.3s ease-out;
+    will-change: transform;
+  }
+
+  .add-to-cart:hover,
+  .add-to-cart:focus,
+  .add-to-cart:active {
+    -webkit-box-shadow: var(--shadow-button);
+    box-shadow: var(--shadow-button);
+  }
+
+  .added-to-cart.fade-enter-active {
+    transition: 0.4s;
+  }
+
+  .added-to-cart.fade-leave-active {
+    transition: 0.5s;
+  }
 }
 </style>
