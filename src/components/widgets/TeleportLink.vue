@@ -15,7 +15,7 @@ import { defineComponent, PropType } from "vue";
 import { FOCUSABLE_ELEMENT_SELECTORS } from "@/constants";
 
 export default defineComponent({
-  name: "SkipLink",
+  name: "TeleportLink",
 
   setup(prop) {
     const handleTeleport = (evt: Event) => {

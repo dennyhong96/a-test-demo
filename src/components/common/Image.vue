@@ -1,12 +1,12 @@
 <template>
-  <picture :style="{ '--aspect-ratio': aspectRatio ?? 1 }">
-    <source :srcset="optimizedSrc.srcset" />
-    <img :src="optimizedSrc.baseSrc" :alt="alt" width="400" />
+  <picture ref="pictureRef" :style="{ '--aspect-ratio': aspectRatio ?? 1 }">
+    <source :srcset="lazy ? undefined : srcset" />
+    <img :src="lazy ? undefined : baseSrc" :alt="alt" />
   </picture>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 
 import { optimizeProductImageSrc } from "@/utils";
 
@@ -14,6 +14,9 @@ export default defineComponent({
   name: "Image",
 
   props: {
+    lazy: {
+      type: Boolean as PropType<boolean>,
+    },
     src: {
       required: true,
       type: String as PropType<string>,
@@ -27,10 +30,41 @@ export default defineComponent({
     },
   },
 
-  computed: {
-    optimizedSrc() {
-      return optimizeProductImageSrc(this.src);
-    },
+  setup(props) {
+    const pictureRef = ref<HTMLPictureElement | null>(null);
+
+    const { baseSrc, srcset } = optimizeProductImageSrc(props.src);
+
+    let observer: IntersectionObserver;
+
+    onMounted(() => {
+      if (!props.lazy) return;
+      const picture = pictureRef.value;
+      if (!picture) return;
+      const source = picture.querySelector("source") as HTMLSourceElement;
+      const image = picture.querySelector("img") as HTMLImageElement;
+
+      observer = new IntersectionObserver(([entry], observer) => {
+        if (entry.isIntersecting) {
+          source.srcset = srcset;
+          image.src = baseSrc;
+          observer.unobserve(entry.target);
+        }
+      });
+
+      observer.observe(picture);
+    });
+
+    onBeforeUnmount(() => {
+      if (!props.lazy || !observer) return;
+      observer.disconnect();
+    });
+
+    return {
+      pictureRef,
+      baseSrc,
+      srcset,
+    };
   },
 });
 </script>

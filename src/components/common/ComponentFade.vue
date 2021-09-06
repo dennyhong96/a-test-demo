@@ -13,13 +13,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.component-fade-enter-active,
-.component-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
 .component-fade-enter-from,
 .component-fade-leave-to {
   opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .component-fade-enter-active,
+  .component-fade-leave-active {
+    transition: opacity 0.3s ease;
+  }
 }
 </style>

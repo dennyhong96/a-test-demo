@@ -11,6 +11,15 @@ import App from "@/App.vue";
 describe("App component", () => {
   beforeAll(() => server.listen());
 
+  beforeEach(() => {
+    // Mock IntersectionObserver
+    window.IntersectionObserver = jest.fn(() => ({
+      observe: jest.fn(),
+      unobserve: jest.fn(),
+      disconnect: jest.fn(),
+    })) as any;
+  });
+
   afterEach(() => server.resetHandlers());
 
   afterAll(() => server.close());

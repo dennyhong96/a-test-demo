@@ -4,7 +4,12 @@
       :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }"
       :data-testId="`product-card-${product.ItemID}`"
     >
-      <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
+      <Image
+        :src="product.PhotoName"
+        :alt="product.ItemName"
+        :lazy="shouldLazyLoadProductImage"
+        :aspectRatio="1 / 1"
+      />
       <div>
         <h3>{{ product.ItemName }}</h3>
         <h4>{{ product.BasePrice }}</h4>
@@ -15,10 +20,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, PropType, ref } from "vue";
 
 import Image from "@/components/common/Image.vue";
 import { Product } from "@/types/Product";
+import { SM_SCREEN_SIZE } from "@/constants";
 
 export default defineComponent({
   name: "ProductCard",
@@ -27,10 +33,43 @@ export default defineComponent({
     Image,
   },
 
+  setup(props) {
+    const shouldLazyLoadProductImage = ref(true);
+
+    const handleResize = () => {
+      if (window.innerWidth <= SM_SCREEN_SIZE) {
+        // Load 2 images ahead of time on mobile
+        if (props.index < 2) {
+          shouldLazyLoadProductImage.value = false;
+        }
+      } else {
+        // Load 6 images ahead of time on larger screens
+        if (props.index < 4) {
+          shouldLazyLoadProductImage.value = false;
+        }
+      }
+    };
+
+    onMounted(() => {
+      handleResize();
+      window.addEventListener("resize", handleResize, { passive: true });
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", handleResize);
+    });
+
+    return { shouldLazyLoadProductImage };
+  },
+
   props: {
     product: {
       required: true,
       type: Object as PropType<Product>,
+    },
+    index: {
+      required: true,
+      type: Number as PropType<number>,
     },
   },
 });

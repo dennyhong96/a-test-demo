@@ -3,7 +3,12 @@
     <Container>
       <ComponentFade>
         <ul v-if="!isLoading">
-          <ProductCard v-for="product in products" :key="product.ItemID" :product="product" />
+          <ProductCard
+            v-for="(product, index) in products"
+            :key="product.ItemID"
+            :product="product"
+            :index="index"
+          />
         </ul>
         <Loader v-else />
       </ComponentFade>
