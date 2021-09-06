@@ -1,8 +1,8 @@
+import data from "@/__tests__/mocks/_data.json";
+import { generateLogoSrc } from "@/utils";
 import { Cart } from "@/types/Cart";
 import { Company } from "@/types/Company";
 import { Product } from "@/types/Product";
-import { generateLogoSrc } from "@/utils";
-import data from "@/__tests__/mocks/_data.json";
 
 export const AVAILABLE_PRODUCTS: Product[] = data.items.filter(
   (item) => !!item.BasePrice && item.OnHandQuantity > 5,

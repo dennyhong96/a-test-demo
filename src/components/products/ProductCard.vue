@@ -1,6 +1,9 @@
 <template>
   <li>
-    <router-link :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }">
+    <router-link
+      :to="{ name: 'ProductDetails', params: { itemId: product.ItemID } }"
+      :data-testId="`product-card-${product.ItemID}`"
+    >
       <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
       <div>
         <h3>{{ product.ItemName }}</h3>

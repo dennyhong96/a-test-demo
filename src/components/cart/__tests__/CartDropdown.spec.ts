@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 
-import { render, fireEvent, screen, waitForElementToBeRemoved } from "@/__tests__/testUtils";
+import { render, screen, waitForElementToBeRemoved } from "@/__tests__/testUtils";
 import { CART_FILLED, LINE_ITEMS, AVAILABLE_PRODUCTS } from "@/__tests__/fixtures";
 import { formatCurrency } from "@/utils";
 import CartDropdown from "@/components/cart/CartDropdown.vue";
@@ -33,7 +33,7 @@ describe("Cart component", () => {
 
     // Open cart
     const toggleButton = screen.getByRole("button", { name: /Open shopping cart/i });
-    fireEvent.click(toggleButton);
+    userEvent.click(toggleButton);
     const cart = await screen.findByText(/Happy shopping!/i, { exact: false });
     expect(cart).toBeInTheDocument();
 
@@ -52,7 +52,7 @@ describe("Cart component", () => {
 
     // Open cart
     const toggleButton = screen.getByRole("button", { name: /Open shopping cart/i });
-    fireEvent.click(toggleButton);
+    userEvent.click(toggleButton);
     const cart = await screen.findByText(/total/i, { exact: false });
     expect(cart).toBeInTheDocument();
 
@@ -84,7 +84,7 @@ describe("Cart component", () => {
 
     // Open cart
     const toggleButton = screen.getByRole("button", { name: /Open shopping cart/i });
-    fireEvent.click(toggleButton);
+    userEvent.click(toggleButton);
     const cart = await screen.findByText(/total/i, { exact: false });
     expect(cart).toBeInTheDocument();
 
@@ -103,7 +103,7 @@ describe("Cart component", () => {
     const firstLineItemsElement = screen.getByTestId(`cart-line-item-${firstLineItem.ItemID}`);
     const removeLineItemButton = firstLineItemsElement.querySelector("button");
     expect(removeLineItemButton).toBeInTheDocument();
-    fireEvent.click(removeLineItemButton as HTMLButtonElement);
+    userEvent.click(removeLineItemButton as HTMLButtonElement);
 
     // Cart should remove first line item from UI
     await waitForElementToBeRemoved(firstLineItemsElement);
