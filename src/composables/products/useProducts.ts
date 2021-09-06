@@ -5,26 +5,28 @@ import useStore from "@/composables/common/useStore";
 import useSortProduct from "@/composables/products/useSortProduct";
 import useFilterProduct from "@/composables/products/useFilterProduct";
 import { formatCurrency } from "@/utils";
+import { Product } from "@/types/Product";
 
 function useProducts() {
   const store = useStore();
   const { sortBy } = useSortProduct();
   const { filter } = useFilterProduct();
 
-  const products = computed(() => {
-    const list = [...store.state.Products];
-    let results = list;
+  type SearchKey = keyof Product;
 
+  const products = computed(() => {
+    let filteredProducts = [...store.state.Products];
+
+    // Fuzzy search
     if (filter.value !== "") {
-      const options = {
-        includeScore: true,
-        keys: ["ItemName", "Description"],
-      };
-      const fuse = new Fuse(list, options);
-      results = fuse.search(filter.value).map((res) => res.item);
+      const fuse = new Fuse(filteredProducts, {
+        keys: ["ItemName", "Description"] as SearchKey[],
+        threshold: 0.5,
+      });
+      filteredProducts = fuse.search(filter.value).map((result) => result.item);
     }
 
-    return results
+    return filteredProducts
       .sort((a, b) => {
         switch (sortBy.value) {
           case "PRICE_LOW": {

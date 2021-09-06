@@ -32,6 +32,7 @@
   --shadow-button: 0px 10px 13px -7px rgba(0, 0, 0, 0.5), 5px 5px 15px 5px rgba(0, 0, 0, 0);
 
   --transition-standard: 0.3s ease-out;
+  --transition-elastic: 1s cubic-bezier(0.3, 1.25, 0.6, 1);
 }
 
 @media (max-width: 600px) {
