@@ -139,16 +139,7 @@ export default defineComponent({
   box-shadow: var(--shadow-standard);
 }
 
-.cart.drop-enter-active {
-  opacity: 0;
-  transform: translateY(-25px);
-}
-
-.cart.drop-enter-to {
-  transform: translateY(0);
-  opacity: 1;
-}
-
+.cart.drop-enter-from,
 .cart.drop-leave-to {
   transform: scale(0.9) translateY(-25px);
   opacity: 0;
@@ -238,11 +229,11 @@ export default defineComponent({
   }
 
   .cart.drop-enter-active {
-    transition: 0.3s;
+    transition: 0.2s ease-out;
   }
 
   .cart.drop-leave-active {
-    transition: 0.45s;
+    transition: 0.3s ease-in;
   }
 
   .cart li button {

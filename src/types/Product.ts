@@ -19,3 +19,5 @@ export interface Product {
   Discontinued: boolean;
   IsDeleted: boolean;
 }
+
+export type ProductSortBy = "DEFAULT" | "PRICE_LOW" | "PRICE_HIGH";

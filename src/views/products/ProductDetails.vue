@@ -1,21 +1,18 @@
 <template>
   <Section>
     <Container>
-      <ComponentFade>
-        <div v-if="!isLoading && product" class="wrapper">
-          <div class="left">
-            <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
-          </div>
+      <div v-if="product" class="wrapper">
+        <div class="left">
+          <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
+        </div>
 
-          <div class="right">
-            <div class="right-inner">
-              <ProductInfo :product="product" />
-              <ProductForm :product="product" />
-            </div>
+        <div class="right">
+          <div class="right-inner">
+            <ProductInfo :product="product" />
+            <ProductForm :product="product" />
           </div>
         </div>
-        <Loader v-else />
-      </ComponentFade>
+      </div>
     </Container>
   </Section>
 </template>
@@ -27,8 +24,6 @@ import useProductByRoute from "@/composables/products/useProductByRoute";
 import useCompany from "@/composables/company/useCompany";
 import useIsLoading from "@/composables/common/useIsLoading";
 import Container from "@/components/common/Container.vue";
-import ComponentFade from "@/components/common/ComponentFade.vue";
-import Loader from "@/components/common/Loader.vue";
 import Section from "@/components/common/Section.vue";
 import Image from "@/components/common/Image.vue";
 import ProductForm from "@/components/products/ProductForm.vue";
@@ -42,8 +37,6 @@ export default defineComponent({
     ProductForm,
     Container,
     Section,
-    Loader,
-    ComponentFade,
     Image,
   },
 
@@ -74,7 +67,7 @@ export default defineComponent({
       }
     });
 
-    return { product, isLoading };
+    return { product };
   },
 });
 </script>

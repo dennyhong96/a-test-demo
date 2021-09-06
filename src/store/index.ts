@@ -2,7 +2,7 @@ import { createStore, ActionContext, Store, StoreOptions } from "vuex";
 import { InjectionKey } from "vue";
 
 import { Company } from "@/types/Company";
-import { Product } from "@/types/Product";
+import { Product, ProductSortBy } from "@/types/Product";
 import { SalesRep } from "@/types/SalesRep";
 import { Cart, CartItem } from "@/types/Cart";
 import { REQUEST_URL } from "@/constants";
@@ -10,6 +10,8 @@ import { formatCurrency, generateLogoSrc } from "@/utils";
 
 export interface State {
   Products: Product[];
+  filter: string;
+  sort: ProductSortBy;
   SalesRep: SalesRep | null;
   Company: Company | null;
   Cart: Cart;
@@ -26,6 +28,8 @@ export const key: InjectionKey<Store<State>> = Symbol();
 export const storeOptions: StoreOptions<State> = {
   state: {
     Products: [],
+    filter: "",
+    sort: "DEFAULT",
     Company: null,
     SalesRep: null,
     Cart: {},
@@ -38,6 +42,11 @@ export const storeOptions: StoreOptions<State> = {
       state.SalesRep = payload.SalesRep;
       state.Company = payload.Company;
       state.isLoading = false;
+    },
+
+    // Products mutations
+    sortProducts(state, { sortBy }: { sortBy: ProductSortBy }) {
+      state.sort = sortBy;
     },
 
     // Cart mutations
@@ -94,6 +103,12 @@ export const storeOptions: StoreOptions<State> = {
           logoSrc: generateLogoSrc(data.ManufacturerID),
         },
       });
+    },
+
+    // Products actions
+    sortProducts(context: ActionContext<State, State>, { sortBy }: { sortBy: ProductSortBy }) {
+      if (sortBy === context.state.sort) return;
+      context.commit("sortProducts", { sortBy });
     },
 
     // Cart actions

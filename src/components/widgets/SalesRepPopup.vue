@@ -120,19 +120,10 @@ export default defineComponent({
   box-shadow: var(--shadow-standard);
 }
 
-.sales-info.scale-fade-enter-active {
-  opacity: 0;
-  transform: scale(0.9) translateY(calc(-100% - 8px));
-}
-
-.sales-info.scale-fade-enter-to {
-  transform: scale(1) translateY(calc(-100% - 8px));
-  opacity: 1;
-}
-
+.sales-info.scale-fade-enter-from,
 .sales-info.scale-fade-leave-to {
-  transform: scale(0.9) translateY(calc(-100% - 8px));
   opacity: 0;
+  transform: scale(0.9) translateY(calc(-100% - 8px));
 }
 
 .sales-info .header {
@@ -183,11 +174,11 @@ p:not(:last-of-type) {
   }
 
   .sales-info.scale-fade-enter-active {
-    transition: 0.3s;
+    transition: 0.2s ease-out;
   }
 
   .sales-info.scale-fade-leave-active {
-    transition: 0.6s;
+    transition: 0.3s ease-in;
   }
 
   .sales-info a {

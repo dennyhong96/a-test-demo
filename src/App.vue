@@ -3,7 +3,10 @@
 
   <Header />
   <main id="main">
-    <router-view />
+    <ComponentFade>
+      <Loader v-if="isLoading" />
+      <router-view v-else />
+    </ComponentFade>
   </main>
   <Footer />
   <SalesRepPopup />
@@ -19,6 +22,9 @@ import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
 import TeleportLink from "@/components/widgets/TeleportLink.vue";
 import SalesRepPopup from "@/components/widgets/SalesRepPopup.vue";
+import ComponentFade from "@/components/common/ComponentFade.vue";
+import Loader from "@/components/common/Loader.vue";
+import useIsLoading from "./composables/common/useIsLoading";
 
 export default defineComponent({
   name: "App",
@@ -28,12 +34,15 @@ export default defineComponent({
     Footer,
     TeleportLink,
     SalesRepPopup,
+    ComponentFade,
+    Loader,
   },
 
   setup() {
     const store = useStore();
     store.dispatch("loadData");
-    return {};
+    const { isLoading } = useIsLoading();
+    return { isLoading };
   },
 });
 </script>

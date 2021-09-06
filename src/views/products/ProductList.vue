@@ -1,17 +1,15 @@
 <template>
   <Section>
     <Container>
-      <ComponentFade>
-        <ul v-if="!isLoading">
-          <ProductCard
-            v-for="(product, index) in products"
-            :key="product.ItemID"
-            :product="product"
-            :index="index"
-          />
-        </ul>
-        <Loader v-else />
-      </ComponentFade>
+      <ProductsFilterSort />
+      <transition-group tag="ul" name="products">
+        <ProductCard
+          v-for="(product, index) in products"
+          :key="product.ItemID"
+          :product="product"
+          :index="index"
+        />
+      </transition-group>
     </Container>
   </Section>
 </template>
@@ -20,29 +18,23 @@
 import { defineComponent } from "vue";
 
 import useProducts from "@/composables/products/useProducts";
-import useIsLoading from "@/composables/common/useIsLoading";
 import Container from "@/components/common/Container.vue";
-import Loader from "@/components/common/Loader.vue";
 import Section from "@/components/common/Section.vue";
-import ComponentFade from "@/components/common/ComponentFade.vue";
 import ProductCard from "@/components/products/ProductCard.vue";
+import ProductsFilterSort from "@/components/products/ProductsFilterSort.vue";
 
 export default defineComponent({
   name: "ProductList",
 
   components: {
     Container,
-    Loader,
     Section,
     ProductCard,
-    ComponentFade,
+    ProductsFilterSort,
   },
 
   setup() {
-    return {
-      ...useProducts(),
-      ...useIsLoading(),
-    };
+    return useProducts();
   },
 });
 </script>
@@ -52,5 +44,21 @@ ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 48px;
+}
+
+.products {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .products-move {
+    transition: transform 1s cubic-bezier(0.33, 1.28, 0.64, 1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 600px) {
+  .products-move {
+    transition: transform 0.5s ease-out;
+  }
 }
 </style>

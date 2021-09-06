@@ -1,5 +1,5 @@
 <template>
-  <transition name="component-fade">
+  <transition name="component-fade" mode="out-in" appear>
     <slot></slot>
   </transition>
 </template>
@@ -19,9 +19,12 @@ export default defineComponent({
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .component-fade-enter-active,
+  .component-fade-enter-active {
+    transition: opacity 0.25s ease-out;
+  }
+
   .component-fade-leave-active {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease-in;
   }
 }
 </style>

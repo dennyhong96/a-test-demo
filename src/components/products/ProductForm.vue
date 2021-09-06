@@ -160,14 +160,7 @@ form input:disabled {
   color: var(--color-success);
 }
 
-.added-to-cart.fade-enter-active {
-  opacity: 0;
-}
-
-.added-to-cart.fade-enter-to {
-  opacity: 1;
-}
-
+.added-to-cart.fade-enter-from,
 .added-to-cart.fade-leave-to {
   opacity: 0;
 }
@@ -191,11 +184,11 @@ form input:disabled {
   }
 
   .added-to-cart.fade-enter-active {
-    transition: 0.4s;
+    transition: 0.3s ease-out;
   }
 
   .added-to-cart.fade-leave-active {
-    transition: 0.5s;
+    transition: 0.4s ease-in;
   }
 }
 </style>
