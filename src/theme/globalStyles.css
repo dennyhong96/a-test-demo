@@ -1,11 +1,11 @@
-/* @font-face {
+/* Self-hosted Raleway Variable Font */
+@font-face {
   font-family: "Raleway";
-  src: url("/fonts/raleway-variable-font.woff2")
-      format("woff2 supports variations"),
+  src: url("/fonts/raleway-variable-font.woff2") format("woff2 supports variations"),
     url("/fonts/raleway-variable-font.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-display: fallback;
-} */
+}
 
 :root {
   --color-white: hsl(0deg 0% 100%);
@@ -59,7 +59,7 @@ body,
 
 body {
   font-family: "Raleway", Arial, Helvetica, sans-serif;
-  font-weight: 400;
+  font-weight: var(--font-weight-normal);
   line-height: 1.5;
   overflow-x: hidden;
   background-color: var(--color-white);

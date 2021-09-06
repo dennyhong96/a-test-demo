@@ -18,6 +18,11 @@ export const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "productDetails" */ "@/views/products/ProductDetails.vue"),
     props: true, // Accept any route parameters as props
   },
+
+  {
+    path: "/:catchAll(.*)", // catch all other routes
+    redirect: "/",
+  },
 ];
 
 const router = createRouter({
