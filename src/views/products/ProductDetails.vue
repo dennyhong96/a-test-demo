@@ -1,18 +1,19 @@
 <template>
   <Section>
     <Container>
-      <div v-if="product" class="wrapper">
-        <div class="left">
-          <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
-        </div>
-
-        <div class="right">
-          <div class="right-inner">
-            <ProductInfo :product="product" />
-            <ProductForm :product="product" />
+      <ComponentLoading appear :isLoading="isLoading">
+        <div class="wrapper">
+          <div class="left">
+            <Image :src="product.PhotoName" :alt="product.ItemName" :aspectRatio="1 / 1" />
+          </div>
+          <div class="right">
+            <div class="right-inner">
+              <ProductInfo :product="product" />
+              <ProductForm :product="product" />
+            </div>
           </div>
         </div>
-      </div>
+      </ComponentLoading>
     </Container>
   </Section>
 </template>
@@ -23,6 +24,7 @@ import { defineComponent, onUnmounted } from "vue";
 import useProductByRoute from "@/composables/products/useProductByRoute";
 import useCompany from "@/composables/company/useCompany";
 import useIsLoading from "@/composables/common/useIsLoading";
+import ComponentLoading from "@/components/common/ComponentLoading.vue";
 import Container from "@/components/common/Container.vue";
 import Section from "@/components/common/Section.vue";
 import Image from "@/components/common/Image.vue";
@@ -38,6 +40,7 @@ export default defineComponent({
     Container,
     Section,
     Image,
+    ComponentLoading,
   },
 
   setup() {
@@ -67,7 +70,7 @@ export default defineComponent({
       }
     });
 
-    return { product };
+    return { product, isLoading };
   },
 });
 </script>

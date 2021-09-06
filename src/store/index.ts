@@ -49,6 +49,10 @@ export const storeOptions: StoreOptions<State> = {
       state.sort = sortBy;
     },
 
+    filterProducts(state, { filter }: { filter: string }) {
+      state.filter = filter;
+    },
+
     // Cart mutations
     addToCart(state, { productId, quantity }) {
       if (state.Cart[productId]) {
@@ -109,6 +113,11 @@ export const storeOptions: StoreOptions<State> = {
     sortProducts(context: ActionContext<State, State>, { sortBy }: { sortBy: ProductSortBy }) {
       if (sortBy === context.state.sort) return;
       context.commit("sortProducts", { sortBy });
+    },
+
+    filterProducts(context: ActionContext<State, State>, { filter }: { filter: string }) {
+      if (filter === context.state.filter) return;
+      context.commit("filterProducts", { filter });
     },
 
     // Cart actions

@@ -1,3 +1,13 @@
+export function debounce(func: (this: any, ...args: any[]) => void, wait = 100) {
+  let timeout: ReturnType<typeof setTimeout>;
+  return function(this: any, ...args: any[]) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      func.apply(this, args);
+    }, wait);
+  };
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-US", {
     currency: "USD",

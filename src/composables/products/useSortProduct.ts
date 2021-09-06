@@ -3,7 +3,7 @@ import { computed } from "vue";
 import useStore from "@/composables/common/useStore";
 import { ProductSortBy } from "@/types/Product";
 
-function useProducts() {
+function useSortProducts() {
   const store = useStore();
   const sortBy = computed(() => store.state.sort);
 
@@ -14,4 +14,4 @@ function useProducts() {
   return { sortBy, handleSort };
 }
 
-export default useProducts;
+export default useSortProducts;
