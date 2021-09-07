@@ -57,6 +57,11 @@ const mutations = {
     state.isLoading = false;
   },
 
+  requestError(state: ProductsState) {
+    state.isError = true;
+    state.isLoading = false;
+  },
+
   sortProducts(state: ProductsState, { sortBy }: { sortBy: ProductSortBy }) {
     state.data.sort = sortBy;
   },

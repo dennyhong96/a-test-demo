@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 
 import Container from "@/components/common/Container.vue";
 import Section from "@/components/common/Section.vue";
@@ -28,9 +28,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { company } = useCompany();
-    const year = computed(() => new Date().getFullYear());
-    return { company, year };
+    return { year: new Date().getFullYear(), ...useCompany() };
   },
 });
 </script>

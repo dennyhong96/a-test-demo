@@ -2,13 +2,15 @@
   <TeleportLink direction="forward" />
   <Header />
 
-  <main id="main">
+  <main id="main" v-if="!isGlobalError">
     <router-view />
   </main>
 
   <Footer />
   <SalesRepPopup />
   <TeleportLink direction="back" />
+
+  <Alert v-if="isGlobalError" />
 </template>
 
 <script lang="ts">
@@ -17,9 +19,10 @@ import { defineComponent } from "vue";
 import useStore from "@/composables/common/useStore";
 import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
+import Alert from "@/components/common/Alert.vue";
 import TeleportLink from "@/components/widgets/TeleportLink.vue";
 import SalesRepPopup from "@/components/widgets/SalesRepPopup.vue";
-import useProducts from "./composables/products/useProducts";
+import useGlobalError from "./composables/common/useGlobalError";
 
 export default defineComponent({
   name: "App",
@@ -27,15 +30,15 @@ export default defineComponent({
   components: {
     Header,
     Footer,
+    Alert,
     TeleportLink,
     SalesRepPopup,
   },
 
   setup() {
     const store = useStore();
-    const { isLoading } = useProducts();
     store.dispatch("loadData");
-    return { isLoading };
+    return useGlobalError();
   },
 });
 </script>

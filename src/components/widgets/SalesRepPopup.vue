@@ -2,7 +2,7 @@
   <div class="wrapper" v-click-outside="handleClickOutside">
     <!-- Sales Rep Info  -->
     <transition name="scale-fade">
-      <div v-if="isWidgetOpen && salesRep" class="sales-info" data-testId="sales-rep-info">
+      <div v-if="isWidgetOpen && !isLoading" class="sales-info" data-testId="sales-rep-info">
         <div class="header">
           <p>
             Hi, this is {{ salesRep.FirstName }} {{ salesRep.LastName }}
@@ -59,7 +59,7 @@ export default defineComponent({
   name: "SalesRepPopup",
 
   setup() {
-    const { salesRep } = useSalesRep();
+    const { salesRep, isLoading } = useSalesRep();
 
     const isWidgetOpen = ref(false);
 
@@ -73,6 +73,7 @@ export default defineComponent({
 
     return {
       salesRep,
+      isLoading,
       isWidgetOpen,
 
       handleToggleWidget,

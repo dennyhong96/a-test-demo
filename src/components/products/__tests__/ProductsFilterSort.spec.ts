@@ -10,7 +10,7 @@ jest.mock("@/utils/index", () => {
   return {
     __esModule: true,
     ...originalModule,
-    debounce: function debounce(func: (this: any, ...args: any[]) => void, wait = 100) {
+    debounce: function debounce(func: (this: any, ...args: any[]) => void) {
       return function(this: any, ...args: any[]) {
         func.apply(this, args);
       };

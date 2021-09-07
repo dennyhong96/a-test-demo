@@ -21,6 +21,11 @@ const mutations = {
     state.data = company;
     state.isLoading = false;
   },
+
+  requestError(state: CompanyState) {
+    state.isError = true;
+    state.isLoading = false;
+  },
 };
 
 export default {

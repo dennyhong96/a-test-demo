@@ -49,9 +49,7 @@ export default defineComponent({
   },
 
   setup() {
-    return {
-      ...useProducts(),
-    };
+    return useProducts();
   },
 });
 </script>

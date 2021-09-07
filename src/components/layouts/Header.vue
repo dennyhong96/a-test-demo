@@ -29,8 +29,7 @@ export default defineComponent({
   },
 
   setup() {
-    const { company } = useCompany();
-    return { company };
+    return useCompany();
   },
 });
 </script>

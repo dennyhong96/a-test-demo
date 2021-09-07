@@ -7,8 +7,10 @@ import data from "@/__tests__/mocks/_data.json";
 import { AVAILABLE_PRODUCTS, COMPANY } from "@/__tests__/fixtures";
 import { formatCurrency, fuzzySearch, pluralize } from "@/utils";
 import App from "@/App.vue";
+import { rest } from "msw";
+import { REQUEST_URL } from "@/constants";
 
-describe("App component", () => {
+describe("A Test Demo App", () => {
   beforeAll(() => server.listen());
 
   beforeEach(() => {
@@ -47,6 +49,20 @@ describe("App component", () => {
     userEvent.click(logo);
 
     expect(await screen.findAllByRole("listitem")).toHaveLength(data.items.length);
+  });
+
+  test("Should display error alert on application error", async () => {
+    // Mock a network error
+    server.resetHandlers(
+      rest.get(REQUEST_URL, (req, res, ctx) => {
+        return res(ctx.status(500));
+      }),
+    );
+
+    render(App);
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toBeInTheDocument();
   });
 
   test("Should sort products by sorting options", async () => {

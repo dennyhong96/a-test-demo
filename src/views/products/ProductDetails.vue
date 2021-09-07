@@ -43,9 +43,8 @@ export default defineComponent({
   },
 
   setup() {
-    // const { isLoading } = useIsLoading();
-    const { product } = useProductByRoute();
     const { company, isLoading } = useCompany();
+    const { product } = useProductByRoute();
 
     // Setup document title and meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement; // doesn't exist in tests

@@ -26,6 +26,7 @@
 
   --z-header: 1;
   --z-skip-link: 2;
+  --z-alert: 3;
 
   --shadow-standard: 0px 0px 15px 3px rgba(0, 0, 0, 0.075);
   --shadow-raised: 0px 0px 20px 6px rgba(0, 0, 0, 0.05);

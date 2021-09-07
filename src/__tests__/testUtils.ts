@@ -7,7 +7,7 @@ import merge from "lodash.merge";
 
 import { storeOptions, key, State } from "@/store";
 import { routes } from "@/router";
-import clickOutside from "@/lib/clickOutside";
+import clickOutside from "@/directives/clickOutside";
 
 const customRender = (
   ui: any,

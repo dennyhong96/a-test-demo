@@ -37,26 +37,47 @@ export const storeOptions: StoreOptions<State> = {
   },
 
   actions: {
+    // NOTE: In a more real world setting, I would use this action to kick off multiple network request actions
+    // in sub-modules to get their own data from differnt API endpoints, instead of having just one request for all data
     async loadData(context: ActionContext<State, State>) {
-      const res = await fetch(REQUEST_URL);
-      const data: ResponseData = await res.json();
+      try {
+        const res = await fetch(REQUEST_URL);
+        if (!res.ok) throw new Error("Request failed.");
 
-      context.commit("products/productsLoaded", {
-        products: data.items,
-      });
+        const data: ResponseData = await res.json();
 
-      context.commit("company/companyLoaded", {
-        company: {
-          CompanyName: data.CompanyName,
-          ManufacturerID: data.ManufacturerID,
-          Message: data.Message,
-          logoSrc: generateLogoSrc(data.ManufacturerID),
-        },
-      });
+        context.commit("products/productsLoaded", {
+          products: data.items,
+        });
 
-      context.commit("salesRep/salesRepLoaded", {
-        salesRep: data.SalesRep,
-      });
+        context.commit("company/companyLoaded", {
+          company: {
+            CompanyName: data.CompanyName,
+            ManufacturerID: data.ManufacturerID,
+            Message: data.Message,
+            logoSrc: generateLogoSrc(data.ManufacturerID),
+          },
+        });
+
+        context.commit("salesRep/salesRepLoaded", {
+          salesRep: data.SalesRep,
+        });
+      } catch (error) {
+        // NOTE: In a more real world setting, each network request action in sub-module would commit their own error
+        context.commit("products/requestError");
+        context.commit("company/requestError");
+        context.commit("salesRep/requestError");
+      }
+    },
+  },
+
+  getters: {
+    isGlobalLoading: (state: State) => () => {
+      return state.company.isLoading || state.products.isLoading || state.salesRep.isLoading;
+    },
+
+    isGloabalError: (state: State) => () => {
+      return state.company.isError || state.products.isError || state.salesRep.isError;
     },
   },
 
