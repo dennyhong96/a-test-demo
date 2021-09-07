@@ -36,7 +36,9 @@ export function formatCurrency(amount: number): string {
 }
 
 export function generateLogoSrc(manufacturerId: string, width = 200): string {
-  return `http://images.repzio.com/productimages/${manufacturerId}/logo${manufacturerId}_lg.jpg?width=${width}`;
+  return `${
+    process.env.NODE_ENV === "production" ? "https" : "http"
+  }://images.repzio.com/productimages/${manufacturerId}/logo${manufacturerId}_lg.jpg?width=${width}`;
 }
 
 export function optimizeProductImageSrc(
@@ -54,8 +56,9 @@ export function optimizeProductImageSrc(
   baseSrc: string;
   srcset: string;
 } {
+  src = process.env.NODE_ENV === "production" ? src.replace("http", "https") : src;
   return {
-    baseSrc: `${src}?width=${smImageSize}&height=${smImageSize}`,
+    baseSrc: `${src}?width=${mdImageSize}&height=${mdImageSize}`,
     srcset: `
     ${src}?width=${smImageSize}&height=${smImageSize} 1x,
     ${src}?width=${mdImageSize}&height=${mdImageSize} 2x,
