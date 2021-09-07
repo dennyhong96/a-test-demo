@@ -46,9 +46,8 @@ export default defineComponent({
     const { company, isLoading } = useCompany();
     const { product } = useProductByRoute();
 
-    // Setup document title and meta description
+    // TODO: Abstract below logic that updates document title and meta description into a composable
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement; // doesn't exist in tests
-
     const oldTitle = document?.title ?? "";
     const oldMetaDescription = metaDescription?.content ?? "";
 

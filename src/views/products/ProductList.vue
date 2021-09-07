@@ -124,27 +124,16 @@ export default defineComponent({
 @media (prefers-reduced-motion: no-preference) {
   .product-enter-active,
   .product-leave-active {
-    transition: 1s cubic-bezier(0.3, 1.25, 0.6, 1);
+    transition: 0.5s ease-in-out;
   }
 
   .product-move {
-    transition: transform 1s cubic-bezier(0.3, 1.25, 0.6, 1);
+    transition: transform 0.5s ease-in-out;
   }
 
   .results-enter-active,
   .results-leave-active {
     transition: var(--transition-standard);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) and (max-width: 600px) {
-  .product-enter-active,
-  .product-leave-active {
-    transition: 0.5s ease-out;
-  }
-
-  .product-move {
-    transition: transform 0.5s ease-out;
   }
 }
 </style>

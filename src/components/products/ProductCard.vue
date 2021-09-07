@@ -78,7 +78,7 @@ export default defineComponent({
 <style scoped>
 a {
   display: block;
-  padding: 16px;
+  padding: 32px;
   height: 100%;
   border-radius: 15px;
   -webkit-box-shadow: var(--shadow-standard);
@@ -98,7 +98,7 @@ h4 {
 }
 
 p {
-  margin-top: 16px;
+  margin-top: 8px;
   font-size: 0.9rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
