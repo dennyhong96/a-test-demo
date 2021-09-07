@@ -90,6 +90,7 @@ export default defineComponent({
 @media (max-width: 950px) {
   .wrapper {
     grid-template-columns: repeat(2, 1fr);
+    align-items: center;
   }
 }
 

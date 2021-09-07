@@ -84,7 +84,8 @@ export default defineComponent({
   border-bottom-left-radius: 10px;
   border-right-width: 0;
   padding: 0 8px;
-  flex: 1;
+  flex: 0 0 calc(100% - 36px);
+  width: calc(100% - 36px);
 }
 
 .filter input:focus {

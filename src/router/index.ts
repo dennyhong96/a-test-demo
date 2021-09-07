@@ -16,12 +16,7 @@ export const routes: Array<RouteRecordRaw> = [
     // Code split by route
     component: () =>
       import(/* webpackChunkName: "productDetails" */ "@/views/products/ProductDetails.vue"),
-    props: true, // Accept any route parameters as props
-  },
-
-  {
-    path: "/:catchAll(.*)", // catch all other routes
-    redirect: "/",
+    props: true,
   },
 ];
 
