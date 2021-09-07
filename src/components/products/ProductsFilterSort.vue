@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="filter">
       <input type="text" :value="filter" @input="handleInput" placeholder="Search..." />
-      <button @click="handleClearFilter">
+      <button @click="handleClearFilter" aria-label="Clear filter input">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"

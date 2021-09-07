@@ -1,18 +1,14 @@
 import { computed } from "vue";
-import Fuse from "fuse.js";
 
 import useStore from "@/composables/common/useStore";
 import useSortProduct from "@/composables/products/useSortProduct";
 import useFilterProduct from "@/composables/products/useFilterProduct";
-import { formatCurrency } from "@/utils";
-import { Product } from "@/types/Product";
+import { formatCurrency, fuzzySearch } from "@/utils";
 
 function useProducts() {
   const store = useStore();
   const { sortBy } = useSortProduct();
   const { filter } = useFilterProduct();
-
-  type SearchKey = keyof Product;
 
   const isLoading = computed(() => store.state.products.isLoading);
   const isError = computed(() => store.state.products.isError);
@@ -21,11 +17,11 @@ function useProducts() {
 
     // Fuzzy search
     if (filter.value !== "") {
-      const fuse = new Fuse(filteredProducts, {
-        keys: ["ItemName", "Description"] as SearchKey[],
-        threshold: 0.5,
+      filteredProducts = fuzzySearch({
+        list: filteredProducts,
+        searchTerm: filter.value,
+        searhKeys: ["ItemName", "Description"],
       });
-      filteredProducts = fuse.search(filter.value).map((result) => result.item);
     }
 
     return filteredProducts

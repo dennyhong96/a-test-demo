@@ -46,6 +46,7 @@ const actions = {
 
   filterProducts(context: ActionContext<ProductsState, State>, { filter }: { filter: string }) {
     if (filter === context.state.data.filter) return;
+
     context.commit("filterProducts", { filter });
   },
 };

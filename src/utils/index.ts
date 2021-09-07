@@ -1,3 +1,23 @@
+import Fuse from "fuse.js";
+
+export const fuzzySearch = <T>({
+  list,
+  searhKeys,
+  searchTerm,
+  threshold = 0.5,
+}: {
+  list: T[];
+  searhKeys: (keyof T)[];
+  searchTerm: string;
+  threshold?: number;
+}) => {
+  const fuse = new Fuse(list, {
+    keys: searhKeys as Fuse.FuseOptionKey[],
+    threshold: threshold,
+  });
+  return fuse.search(searchTerm).map((result) => result.item);
+};
+
 export function debounce(func: (this: any, ...args: any[]) => void, wait = 100) {
   let timeout: ReturnType<typeof setTimeout>;
   return function(this: any, ...args: any[]) {
