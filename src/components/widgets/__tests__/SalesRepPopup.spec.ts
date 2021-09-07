@@ -8,7 +8,7 @@ describe("SalesRepPopup component", () => {
   test("Should open, close, and display sales rep contact information.", async () => {
     render(SalesRepPopup, {
       storeOptionsOverrite: {
-        state: { isLoading: false, SalesRep: SALES_REP },
+        modules: { salesRep: { state: { isLoading: false, data: SALES_REP } } },
       },
     });
 

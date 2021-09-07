@@ -29,7 +29,7 @@ export default defineComponent({
   },
 
   setup() {
-    const company = useCompany();
+    const { company } = useCompany();
     return { company };
   },
 });

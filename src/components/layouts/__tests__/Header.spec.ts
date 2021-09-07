@@ -6,11 +6,8 @@ describe("Header component", () => {
   test("Should display company logo and name", async () => {
     render(Header, {
       storeOptionsOverrite: {
-        state: {
-          isLoading: false,
-          Company: COMPANY,
-          Products: [],
-          Cart: {},
+        modules: {
+          company: { state: { data: COMPANY, isLoading: false } },
         },
       },
     });

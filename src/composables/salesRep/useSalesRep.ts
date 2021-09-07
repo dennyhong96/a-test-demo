@@ -4,8 +4,10 @@ import useStore from "@/composables/common/useStore";
 
 function useSalesRep() {
   const store = useStore();
-  const salesRef = computed(() => store.state.SalesRep);
-  return salesRef;
+  const salesRep = computed(() => store.state.salesRep.data);
+  const isLoading = computed(() => store.state.salesRep.isLoading);
+  const isError = computed(() => store.state.salesRep.isError);
+  return { salesRep, isLoading, isError };
 }
 
 export default useSalesRep;

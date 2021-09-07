@@ -9,7 +9,11 @@ describe("Cart component", () => {
   test("Should open and close", async () => {
     render(CartDropdown, {
       storeOptionsOverrite: {
-        state: { isLoading: false, Cart: {}, Products: AVAILABLE_PRODUCTS },
+        modules: {
+          cart: {
+            state: { data: [] },
+          },
+        },
       },
     });
 
@@ -27,7 +31,10 @@ describe("Cart component", () => {
   test("Should be empty by default", async () => {
     render(CartDropdown, {
       storeOptionsOverrite: {
-        state: { isLoading: false, Cart: {}, Products: AVAILABLE_PRODUCTS },
+        modules: {
+          cart: { state: { data: {} } },
+          products: { state: { isLoading: false, data: { productsList: AVAILABLE_PRODUCTS } } },
+        },
       },
     });
 
@@ -46,7 +53,10 @@ describe("Cart component", () => {
   test("Should render line items and total price", async () => {
     render(CartDropdown, {
       storeOptionsOverrite: {
-        state: { isLoading: false, Cart: CART_FILLED, Products: AVAILABLE_PRODUCTS },
+        modules: {
+          cart: { state: { data: CART_FILLED } },
+          products: { state: { isLoading: false, data: { productsList: AVAILABLE_PRODUCTS } } },
+        },
       },
     });
 
@@ -78,7 +88,10 @@ describe("Cart component", () => {
 
     render(CartDropdown, {
       storeOptionsOverrite: {
-        state: { isLoading: false, Cart: CART_FILLED, Products: AVAILABLE_PRODUCTS },
+        modules: {
+          cart: { state: { data: { CART_FILLED } } },
+          products: { state: { isLoading: false, data: { productsList: AVAILABLE_PRODUCTS } } },
+        },
       },
     });
 

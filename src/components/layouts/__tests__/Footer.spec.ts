@@ -6,11 +6,8 @@ describe("Footer component", () => {
   test("Should display the correct year and company name in copyright text", async () => {
     render(Footer, {
       storeOptionsOverrite: {
-        state: {
-          isLoading: false,
-          Company: COMPANY,
-          Products: [],
-          Cart: {},
+        modules: {
+          company: { state: { data: COMPANY, isLoading: false } },
         },
       },
     });

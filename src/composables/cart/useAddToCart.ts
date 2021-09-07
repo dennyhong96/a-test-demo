@@ -34,7 +34,7 @@ function useAddToCart(product: Product | undefined) {
 
     if (timeout) clearTimeout(timeout);
 
-    store.dispatch("addToCart", {
+    store.dispatch("cart/addToCart", {
       productId: currentProduct.value?.ItemID,
       quantity: addToCartQuantity.value,
     });

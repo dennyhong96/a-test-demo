@@ -7,7 +7,7 @@ function useProduct(productId: string) {
   const store = useStore();
 
   const product = computed<Product>(() => {
-    return store.getters.getProductByItemId(productId);
+    return store.getters["products/getProductByItemId"](productId);
   });
 
   return { product };

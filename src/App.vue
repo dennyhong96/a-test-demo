@@ -19,7 +19,7 @@ import Header from "@/components/layouts/Header.vue";
 import Footer from "@/components/layouts/Footer.vue";
 import TeleportLink from "@/components/widgets/TeleportLink.vue";
 import SalesRepPopup from "@/components/widgets/SalesRepPopup.vue";
-import useIsLoading from "@/composables/common/useIsLoading";
+import useProducts from "./composables/products/useProducts";
 
 export default defineComponent({
   name: "App",
@@ -33,8 +33,8 @@ export default defineComponent({
 
   setup() {
     const store = useStore();
+    const { isLoading } = useProducts();
     store.dispatch("loadData");
-    const { isLoading } = useIsLoading();
     return { isLoading };
   },
 });

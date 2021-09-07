@@ -59,7 +59,7 @@ export default defineComponent({
   name: "SalesRepPopup",
 
   setup() {
-    const salesRep = useSalesRep();
+    const { salesRep } = useSalesRep();
 
     const isWidgetOpen = ref(false);
 

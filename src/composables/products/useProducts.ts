@@ -14,8 +14,10 @@ function useProducts() {
 
   type SearchKey = keyof Product;
 
+  const isLoading = computed(() => store.state.products.isLoading);
+  const isError = computed(() => store.state.products.isError);
   const products = computed(() => {
-    let filteredProducts = [...store.state.Products];
+    let filteredProducts = [...store.state.products.data.productsList];
 
     // Fuzzy search
     if (filter.value !== "") {
@@ -46,7 +48,7 @@ function useProducts() {
       }));
   });
 
-  return { products };
+  return { products, isLoading, isError };
 }
 
 export default useProducts;

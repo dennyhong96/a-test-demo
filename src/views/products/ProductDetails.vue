@@ -23,7 +23,6 @@ import { defineComponent, onUnmounted } from "vue";
 
 import useProductByRoute from "@/composables/products/useProductByRoute";
 import useCompany from "@/composables/company/useCompany";
-import useIsLoading from "@/composables/common/useIsLoading";
 import ComponentLoading from "@/components/common/ComponentLoading.vue";
 import Container from "@/components/common/Container.vue";
 import Section from "@/components/common/Section.vue";
@@ -44,9 +43,9 @@ export default defineComponent({
   },
 
   setup() {
-    const { isLoading } = useIsLoading();
+    // const { isLoading } = useIsLoading();
     const { product } = useProductByRoute();
-    const company = useCompany();
+    const { company, isLoading } = useCompany();
 
     // Setup document title and meta description
     const metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement; // doesn't exist in tests

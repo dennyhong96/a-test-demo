@@ -14,7 +14,9 @@ describe("ProductForm component", () => {
 
     render(ProductForm, {
       storeOptionsOverrite: {
-        state: { isLoading: false, Cart: {}, Products: AVAILABLE_PRODUCTS },
+        modules: {
+          products: { state: { isLoading: false, data: { productsList: AVAILABLE_PRODUCTS } } },
+        },
       },
       renderOptions: {
         props: { product },
@@ -85,7 +87,9 @@ describe("ProductForm component", () => {
 
     render(ProductForm, {
       storeOptionsOverrite: {
-        state: { isLoading: false },
+        modules: {
+          products: { state: { isLoading: false } },
+        },
       },
       renderOptions: {
         props: { product },

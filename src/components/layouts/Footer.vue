@@ -28,7 +28,7 @@ export default defineComponent({
   },
 
   setup() {
-    const company = useCompany();
+    const { company } = useCompany();
     const year = computed(() => new Date().getFullYear());
     return { company, year };
   },

@@ -5,9 +5,9 @@ import { CartItem } from "@/types/Cart";
 
 function useCart() {
   const store = useStore();
-  const cartItems = computed<CartItem[]>(() => store.getters.listCartItems());
-  const total = computed<string>(() => store.getters.getCartTotal());
-  const cartItemsCount = computed<number>(() => store.getters.countCartItems());
+  const cartItems = computed<CartItem[]>(() => store.getters["cart/listCartItems"]());
+  const total = computed<string>(() => store.getters["cart/getCartTotal"]());
+  const cartItemsCount = computed<number>(() => store.getters["cart/countCartItems"]());
 
   const isCartOpen = ref(false);
 
@@ -21,7 +21,7 @@ function useCart() {
 
   const handleRemoveCartItem = (productId: string | undefined) => {
     if (!productId) return;
-    store.dispatch("removeFromCart", { productId });
+    store.dispatch("cart/removeFromCart", { productId });
   };
 
   return {

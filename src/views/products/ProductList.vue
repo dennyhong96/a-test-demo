@@ -36,7 +36,6 @@ import Section from "@/components/common/Section.vue";
 import ComponentLoading from "@/components/common/ComponentLoading.vue";
 import ProductCard from "@/components/products/ProductCard.vue";
 import ProductsFilterSort from "@/components/products/ProductsFilterSort.vue";
-import useIsLoading from "@/composables/common/useIsLoading";
 
 export default defineComponent({
   name: "ProductList",
@@ -52,7 +51,6 @@ export default defineComponent({
   setup() {
     return {
       ...useProducts(),
-      ...useIsLoading(),
     };
   },
 });

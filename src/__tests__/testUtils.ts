@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { render, RenderOptions } from "@testing-library/vue";
 import { createStore, StoreOptions } from "vuex";
 import { createRouter, createWebHistory } from "vue-router";
+import merge from "lodash.merge";
 
 import { storeOptions, key, State } from "@/store";
 import { routes } from "@/router";
@@ -18,7 +19,7 @@ const customRender = (
     renderOptions?: Partial<RenderOptions>;
   } = {},
 ) => {
-  const store = createStore({ ...storeOptions, ...storeOptionsOverrite } as StoreOptions<State>);
+  const store = createStore(merge(storeOptions, storeOptionsOverrite) as StoreOptions<State>);
   const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
